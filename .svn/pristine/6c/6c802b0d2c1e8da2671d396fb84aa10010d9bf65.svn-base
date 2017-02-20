@@ -1,0 +1,53 @@
+@import '../../../styles/_mixin';
+@import '../../../styles/_base';
+//declartion of variables
+$width100:100px;
+// accession page header
+.accession-heading{
+ margin:5px 0;
+ padding-left: 5px;
+}
+.padding0{padding:0px;}
+//view of the accession and columns and table styles
+.accession-view {
+      height: 100%;
+      @include  display-flex;
+    table{
+        width:99%;
+            tr td, tr th{
+            white-space: inherit;
+            vertical-align:middle;
+            text-overflow: inherit !important;
+            }
+            tfoot tr td:first-child{
+            margin:10px 0px;
+            width:0px;
+            }
+    }
+    &__Visit-column {
+        width: $width100 + 50px;
+        @extend .padding0;
+    }
+    &__DOB-column{
+        width: $width100 +20px;
+        @extend .padding0;
+    }
+    &__Icon-column{
+        width: $width100 - 50px;
+        @extend .padding0;
+    }
+    &__preview-column{
+        width: $width100 - 45px;
+        @extend .padding0;
+    }     
+    &__Id-column{
+        width: $width100 + 35px;
+        padding-left: 0px; 
+    }
+    &__Gender-column{
+        width: $width100 + 15px;
+        padding-left: 0px;
+        padding-right: 0px; 
+    }    
+}
+

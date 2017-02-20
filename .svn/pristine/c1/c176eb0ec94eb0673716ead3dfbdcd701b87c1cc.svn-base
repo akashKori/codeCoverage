@@ -1,0 +1,25 @@
+@import '../../../styles/_mixin';
+// Requisition details labview styles
+.labview{
+  @include border-all(1px,solid,$color-gray);
+		   padding:5px;
+  &__status-change{
+     width: 30px !important;
+     float: left;
+     display: block;
+     margin-left: 12px;
+     margin-top: -5px
+  }
+  &__status-text{
+  background-color: #efefef;
+  padding:3px 0;
+ }
+}
+
+
+
+
+
+
+
+

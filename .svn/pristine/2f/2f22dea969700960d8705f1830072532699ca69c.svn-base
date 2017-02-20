@@ -1,0 +1,16 @@
+//this is the file which contains the reducers for the login actions
+
+import {combineReducers} from 'redux';
+
+ // which handles the loginReducer action 
+ //loginReducer function which takes current state and action and return new state
+  export default function loginReducer (state = {user:{},isUserLoggedIn:false}, action) {
+  //based on action.type   
+  switch (action.type)
+  {
+      case 'CREATE_LOGIN':
+       return Object.assign({},state,{user:action.user,isUserLoggedIn:true});
+        default:
+        return state;
+  }
+}

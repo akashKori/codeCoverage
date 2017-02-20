@@ -1,0 +1,71 @@
+
+$text-color:red;
+
+
+.basic-info{width: 17%; float: left; height: 87.2vh;}
+.requisition-details{ float: left; width: 70%; height:90vh;}
+.requisition-notes{ width: 13%; float: left; height: 90vh; }
+
+.result-view{
+    border: 1px solid gray;
+    height:85vh;
+   display: flex;
+  flex-flow: column;
+}
+.result-view__scroll{
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    overflow-y: scroll; /* or overflow-y: auto */
+}
+h4,h5{ margin:5px 0;}
+.labresult-topmenu {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    
+  }
+  li { display: inline-block; border: 1px solid #ddd;text-align: center; padding: 4px 0px; }
+   p{margin:3px; }
+  a {
+    display: block;
+    padding: 6px 12px;
+    text-decoration: none;
+  }
+}
+.text-basicInfo{margin:2px 0};
+
+.Popover__menu-border{
+  border: 1px solid #d4d4d4!important;
+   padding: 0 !important;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+box-shadow: 0 1px 2px rgba(0, 0, 0, 0.7);
+}
+.close-dialog{
+   position: absolute;
+  right: 10px;
+  top: 20px;
+}
+/*****************************
+Labresults menu
+*******************************/
+.iconmenu-labresult{
+  width:auto !important;
+  height:auto !important;
+  padding:5px !important;
+  min-width:65px !important;
+  font-size: 14px !important;
+}
+
+.button-transparent{
+  background: transparent;
+  border:none;
+  outline:none;
+}
+
+.result-export{
+  padding: 4.5px;
+}

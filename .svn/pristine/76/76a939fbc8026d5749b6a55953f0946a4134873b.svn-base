@@ -1,0 +1,19 @@
+import React from 'react'
+import Login from '../../../../src/routes/Login/components/Login'
+import TestUtils from 'react-addons-test-utils'
+import chai from 'chai'
+import {render} from 'enzyme'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
+describe('Testing Login component', () => {
+
+///testing login component by shallow rendering 
+//1. we can also use enzyme which render 1 level deep
+it('should return login component as division',()=>
+ {
+    const renderer = TestUtils.createRenderer();
+    renderer.render(<Login/>);
+    const result = renderer.getRenderOutput();
+    chai.expect(result.type).to.be.equals('div');
+ });
+})

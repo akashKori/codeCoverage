@@ -1,0 +1,140 @@
+import React from 'react';
+import {TableRowProps, Table, TableBody,TableFooter,PagiFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import UltimatePagination from './UltimatePagination'
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+
+
+const styles = {
+  label: {
+    display: 'block'
+  },
+  input: {
+    width: 100
+  },
+   propContainer: {
+    width: 200,
+    overflow: 'hidden',
+    margin: '20px auto 0',
+  },
+  propToggleHeader: {
+    margin: '20px auto 10px',
+  },
+};
+
+class Requisition extends React.Component {
+  constructor() {
+    super();
+
+
+    this.onTotalPagesChange = this.onTotalPagesChange.bind(this);
+    this.onCurrentPageChange = this.onCurrentPageChange.bind(this);
+    this.onPageChangeFromPagination = this.onPageChangeFromPagination.bind(this);
+
+    this.state = {
+     
+      value: null,
+      currentPage: 1,
+      totalPages:10
+    };
+  }
+
+    handleChange = (event, index, value) => this.setState({value});
+ 
+
+  onTotalPagesChange(event) {
+    this.setState({totalPages: +event.target.value});
+  }
+
+  onCurrentPageChange(event) {
+    this.setState({currentPage: +event.target.value});
+  }
+
+  onPageChangeFromPagination(newPage) {
+    this.setState({currentPage: newPage});
+  }
+
+  render() {
+    const{requisitionList,getVisitDetails}=this.props;
+    return (
+      
+      <div style={{ margin: '0 auto' }} >
+    <h2>Requisitions List</h2>
+  <Table selectable={false}>
+          <TableHeader
+            displaySelectAll={false}
+            adjustForCheckbox={this.state.showCheckboxes}
+            enableSelectAll={this.state.enableSelectAll}
+          >
+            <TableRow>
+              <TableHeaderColumn tooltip="Accession Number">Accession #</TableHeaderColumn>
+              <TableHeaderColumn tooltip="Visit Date">Visit Date</TableHeaderColumn>
+              <TableHeaderColumn tooltip="Visit Time">Visit Time</TableHeaderColumn>
+              <TableHeaderColumn tooltip="PSC Location">PSC Location</TableHeaderColumn>
+              <TableHeaderColumn tooltip="Patient Name">Patient Name</TableHeaderColumn>
+              <TableHeaderColumn tooltip="Sex">Sex</TableHeaderColumn>
+              <TableHeaderColumn tooltip="DOB">DOB</TableHeaderColumn>
+              <TableHeaderColumn tooltip="Physician">Physician</TableHeaderColumn>
+              <TableHeaderColumn tooltip="Physician Location">Physician Location</TableHeaderColumn>
+              <TableHeaderColumn tooltip="Status">Status</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody
+            displayRowCheckbox = {false}
+            deselectOnClickaway={this.state.deselectOnClickaway}
+            showRowHover={this.state.showRowHover}
+            stripedRows={this.state.stripedRows}
+          >
+            {requisitionList.map( (row, index) => (
+              <TableRow onDoubleClick={getVisitDetails} key={index} selected={row.selected}>
+                <TableRowColumn>{row.VisitSequenceId}</TableRowColumn>
+                <TableRowColumn>{new Date(row.VisitDate).toLocaleDateString("en-US")}</TableRowColumn>
+                <TableRowColumn>{row.VisitTime}</TableRowColumn>
+                <TableRowColumn>{row.PSCLocation}</TableRowColumn>
+                 <TableRowColumn>{row.PatientName}</TableRowColumn>
+                 <TableRowColumn>{row.PatientSex}</TableRowColumn>
+                 <TableRowColumn>{new Date(row.PatientDOB).toLocaleDateString("en-US")}</TableRowColumn>
+                 <TableRowColumn>{row.PhysicianName}</TableRowColumn>
+                 <TableRowColumn>{row.PhysicianLocation}</TableRowColumn>
+                 <TableRowColumn>{row.VisitStatus}</TableRowColumn>
+              </TableRow>
+              ))}
+          </TableBody>
+     
+  </Table>
+
+ 
+ 
+    
+  </div>
+    );
+  }
+}
+
+Requisition.propTypes = {
+  requisitionList: React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+          VisitSequenceId : React.PropTypes.number.isRequired,
+          PatientName: React.PropTypes.string.isRequired,
+          PhysicianName: React.PropTypes.string.isRequired,
+          PSCLocation: React.PropTypes.string.isRequired,
+          PatientSex: React.PropTypes.string.isRequired,
+          PhysicianLocation: React.PropTypes.string.isRequired,
+          VisitDate: React.PropTypes.string.isRequired,
+          VisitTime: React.PropTypes.string.isRequired,
+          PatientDOB: React.PropTypes.string.isRequired,
+          VisitStatus: React.PropTypes.string.isRequired
+      }).isRequired
+  ).isRequired,
+  getVisitDetails: React.PropTypes.func.isRequired
+};
+
+
+
+// Counter.propTypes = {
+//   counter     : React.PropTypes.number.isRequired,
+//   doubleAsync : React.PropTypes.func.isRequired,
+//   increment   : React.PropTypes.func.isRequired
+// }
+
+export default Requisition

@@ -1,0 +1,26 @@
+import {
+  REQUEST_LABRESULT,
+  RECEIVE_LABRESULT
+} from '../../../Constant/actionType'
+import{APIPATH} from '../../../constant/common'//get the api path
+//this method is use to call the web api service to get the data for the first time
+export  function LoadLabResult (selectedUserId) {
+    return (dispatch) => {
+    dispatch({
+      type: REQUEST_LABRESULT,//defining the name of the action to identify in the reducer
+    });
+  
+  fetch(APIPATH+'Requisition/GetRequisitionTestInfo?patientVisitId='+selectedUserId)//calling the service
+  .then((response) => response.json())
+    .then((labresult) => dispatch(receiveLabResult(labresult)));//passing the data to other actions
+  }
+}
+//this method use to pass the data coming for the lab test result to the component
+export  function receiveLabResult(labresult) {
+
+  return {
+    type:RECEIVE_LABRESULT,//defining the name of the action to identify in the reducer
+    labresult:labresult//passing the data to reducer
+  };
+}
+

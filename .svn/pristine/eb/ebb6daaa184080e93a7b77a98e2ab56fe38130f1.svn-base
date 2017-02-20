@@ -1,0 +1,83 @@
+import React, {Component} from 'react';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+
+class Container extends Component{
+  constructor(props) {
+        super(props);
+        this.state = {
+            fixedHeader: true,
+            fixedFooter: true,
+            stripedRows: false,
+            showRowHover: true,
+            selectable: true,
+            multiSelectable: false,
+            enableSelectAll: false,
+            deselectOnClickaway: true,
+            showCheckboxes: false,
+          
+           
+        };
+    }
+
+   renderList() {
+        return this.props.container.map((cont) => {
+           return (
+               <div>
+                     <h5>{cont.containerName}</h5>
+                     <h5>Accession #: 10026</h5>
+  <Table>
+    <TableHeader displaySelectAll={this.state.showCheckboxes} adjustForCheckbox={this.state.showCheckboxes} enableSelectAll={this.state.enableSelectAll}>
+      <TableRow>
+         <TableHeaderColumn>Container</TableHeaderColumn>
+         <TableHeaderColumn>Collected</TableHeaderColumn>
+         <TableHeaderColumn>Technician</TableHeaderColumn>
+         <TableHeaderColumn>Status</TableHeaderColumn>
+         <TableHeaderColumn>Received in Field</TableHeaderColumn>
+         <TableHeaderColumn>Received in Lab</TableHeaderColumn>
+         <TableHeaderColumn>Lab Receiver</TableHeaderColumn>
+         <TableHeaderColumn>Barcode</TableHeaderColumn>
+         <TableHeaderColumn>Location</TableHeaderColumn>
+      </TableRow>
+    </TableHeader>
+    <TableBody displayRowCheckbox={this.state.showCheckboxes}
+            deselectOnClickaway={this.state.deselectOnClickaway}
+            showRowHover={this.state.showRowHover}
+            stripedRows={this.state.stripedRows}>
+    <TableRow>
+          <TableRowColumn>Light Blue Tube</TableRowColumn>
+          <TableRowColumn>{cont.collectedDate}</TableRowColumn>
+          <TableRowColumn>{cont.technician}</TableRowColumn>
+          <TableRowColumn>{cont.status}</TableRowColumn>
+          <TableRowColumn></TableRowColumn>
+          <TableRowColumn>{cont.receivedDate}</TableRowColumn>
+          <TableRowColumn>{cont.labReceiver}</TableRowColumn>
+          <TableRowColumn>{cont.barcode}</TableRowColumn>
+          <TableRowColumn>{cont.location}</TableRowColumn>
+    </TableRow>
+    </TableBody>
+    </Table>
+
+                 </div>
+
+            );
+        });
+    }
+     render() {
+        return (
+            <div style={{paddingLeft:15}}>
+                {this.renderList()}
+            </div>
+        );
+    }
+
+}
+// Get apps state and pass it as props to UserList
+// > whenever state changes, the UserList will automatically re-render
+function mapStateToProps(allReducers) {
+    return {container: allReducers.req.container};
+}
+
+
+export default connect(mapStateToProps)(Container);

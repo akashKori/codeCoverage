@@ -1,0 +1,31 @@
+
+
+
+
+///
+/// Generates tranparent button  properties for a given element.
+/// @output
+/// ```css
+///   background: transparent;
+///   border:none;
+///   outline:none;
+/// ```
+///
+/// @example
+///   .button-transparent {
+///     @include btn-transparent;
+///   }
+///
+
+@mixin  btn-transparent{
+  background: transparent;
+  border:none;
+  outline:none;
+}
+
+// Transparent button
+.button-transparent{
+  @include btn-transparent;
+}
+
+

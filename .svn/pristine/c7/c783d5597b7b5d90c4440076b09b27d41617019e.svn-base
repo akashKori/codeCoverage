@@ -1,0 +1,11 @@
+import React from 'react';
+
+// loginContainer is the Component which contains the login view
+import LoginDetails from '../containers/loginContainer'
+
+
+export default class Login extends React.Component {
+     render() {
+         return(<LoginDetails  />);
+     }
+}

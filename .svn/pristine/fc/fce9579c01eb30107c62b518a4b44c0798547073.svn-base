@@ -1,0 +1,108 @@
+// this file contains the component for login form 
+import React,{PropTypes} from 'react';
+import './loginContainer.scss'
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+
+//to create login action 
+import * as loginAction from  '../modules/loginAction'
+import mui from 'material-ui';
+import { RouteHandler } from 'react-router';
+
+//update login page component work with redux so importing connect function
+import { connect } from 'react-redux';
+
+
+ class LoginDetails extends React.Component {
+
+   //constructor where assigning the default value for the property, initialize the event
+   constructor(props,context) {
+        super(props,context);
+
+        //setting the local state
+        //user is the object and userName and password are properties
+        this.state ={
+          user: {userName: "", password:"", isLogedin: false}
+        };
+
+          //binding the statement for all functions   
+          this.userNameChange = this.userNameChange.bind(this);
+          this.passwordChange = this.passwordChange.bind(this);
+          this.createLogin = this.createLogin.bind(this);
+    }
+
+    //userNameChange is the function where state is updated every time key is pressed at userName input field
+    userNameChange(event) {
+
+      const user = this.state.user;
+      user.userName = event.target.value;
+
+      //update the state
+      this.setState({user: user})
+    }
+
+    // userNameChange is the function where state is updated every time key is pressed at password input field
+    passwordChange(event) {
+      const user = this.state.user;
+      user.password = event.target.value;
+        this.setState({user: user})
+    }
+
+    //createLogin is the function it is called on click on save button
+    createLogin()
+    {
+        this.props.createLogin(this.state.user);
+        //this.context.router.transitionTo(payload.route);
+        window.location.href = window.location.protocol +"/requisition"
+    }
+
+render(){
+  return(
+    <div className="login">
+        <Paper zDepth={2} className="login-paper">
+          <h4 className="login__heading">Login</h4>
+          <div className="login__content">
+            <TextField hintText="User Name" value={this.state.user.userName} floatingLabelText="User Name" fullWidth={true} onChange={this.userNameChange}/>
+          </div>
+          <div className="login__content">
+             <TextField hintText="Password " value={this.state.user.password}  floatingLabelText="Password" type="password" fullWidth={true} onChange={this.passwordChange}/>
+           </div>
+          <div className="login__btn">
+            <RaisedButton label="Login" onTouchTap={this.createLogin}  primary={true} fullWidth={true} />
+          </div>
+        </Paper>
+      </div>
+    );
+  }
+}
+
+//----------------------------------------------
+//container component
+//----------------------------------------------
+
+//this function takes two parameters state & ownProps.
+//state is represent state in redux  store
+//ownProps let's to access the parameters attached to this component
+function mapStateToProps(state, ownProps)
+{
+  //inside the function define a object that return properties like to expose on our component  
+  return {
+    reducerUser: state.login
+  };
+}
+
+
+//this function is to deciding g what action to expose on this component 
+//dispatch is the function that allow to fire of the action
+// in mapDispatchToProps function dispatch createLogin action
+function mapDispatchToProps(dispatch)
+{
+  return{
+    createLogin:login=> dispatch(loginAction.createLogin(login))
+  };
+}
+
+//connect function is used to create component that can interact with redux
+//both parameters are functions
+export default connect(mapStateToProps,mapDispatchToProps)(LoginDetails)

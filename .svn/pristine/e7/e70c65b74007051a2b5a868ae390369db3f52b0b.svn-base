@@ -1,0 +1,32 @@
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {EditLabResult} from '../actions/index'
+
+class Container extends Component{
+   renderList() {
+        return this.props.container.map((cont) => {
+           return (
+                 <div>{cont.containerName}</div>
+            );
+        });
+    }
+     render() {
+        return (
+            <ul>
+                {this.renderList()}
+            </ul>
+        );
+    }
+
+}
+// Get apps state and pass it as props to UserList
+// > whenever state changes, the UserList will automatically re-render
+function mapStateToProps(allReducers) {
+    return {container: allReducers.container};
+}
+
+function matchDispatchToProps(dispatch){
+    return bindActionCreators({editLabResult: EditLabResult}, dispatch);
+}
+export default connect(mapStateToProps,matchDispatchToProps)(Container);

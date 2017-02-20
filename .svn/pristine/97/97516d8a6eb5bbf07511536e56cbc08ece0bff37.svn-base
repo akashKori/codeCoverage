@@ -1,0 +1,77 @@
+@import '../../../../styles/base';
+///base info column styles
+.basic-info{
+  float:$float-left;
+  @include size(17%,87.2vh);
+  &__border{
+    @include border-all(1px,solid,$color-gray);
+    padding:5px;
+    height:100%;
+    margin-right: 10px;
+  }
+  }
+  //requistion details column style
+.requisition-details{  
+     float:$float-left;
+    @include size(70%,90vh);
+    }
+  //requistion notes column style
+.requisition-notes{  
+    float:$float-left;
+    @include size(13%,90vh); 
+    &__border{
+       @include border-all(1px,solid,$color-gray);
+       padding:5px;
+       height:100%;
+       margin-left: 10px;
+    }
+
+    }
+//requistion each result view block style
+.result-view{
+    @include border-all(1px,solid,$color-gray);
+    padding:5px;
+    padding:null;
+    height:85vh;
+    @include display-flex;
+    flex-flow: column;
+      &__scroll{
+      height:100%;
+      @include display-flex;
+      flex-direction: column;
+      background:$color-white;
+      overflow-y: scroll; /* or overflow-y: auto */
+      }
+}
+h4,h5{ margin:5px 0;}
+//lab result top section menu and link styles
+.labresult-topmenu {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li { @include border-all(1px,solid,lighten( $color-light-gray, 25% ));
+      @include display(inline-block,4px 0px,null,null);text-align: center; }
+   p{margin:3px; }
+  a {
+    @include display(block,6px 12px,null,null);
+    text-decoration: none;
+  }
+}
+.text-basicInfo{margin:2px 0};
+/*****************************
+Labresults menu
+*******************************/
+.iconmenu-labresult{
+  @include box-model(auto !important,auto !important,5px !important,null);
+  min-width:65px !important;
+  font-size:14px !important;
+}
+
+.button-transparent{
+  @include btn-transparent;
+}
+.result-export{
+  padding: 4.5px;
+}

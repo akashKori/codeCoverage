@@ -1,0 +1,30 @@
+import React, {Component} from 'react';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {EditLabResult} from '../actions/index'
+
+class Requisition extends Component{
+   renderList() {
+        return this.props.requisition.map((req) => {
+           return (
+                 <div> {req.testName}</div>
+            );
+        });
+    }
+     render() {
+        return (
+            <ul>
+                {this.renderList()}
+            </ul>
+        );
+    }
+
+}
+// Get apps state and pass it as props to UserList
+// > whenever state changes, the UserList will automatically re-render
+function mapStateToProps(allReducers) {
+    return {requisition: allReducers.requisition};
+}
+
+
+export default connect(mapStateToProps)(Requisition);

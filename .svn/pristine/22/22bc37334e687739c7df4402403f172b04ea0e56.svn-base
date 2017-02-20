@@ -1,0 +1,263 @@
+import React from 'react';
+import { Tabs, Tab } from 'material-ui/Tabs';
+import { List, ListItem } from 'material-ui/List';
+import LabTestResult from '../../containers/LabTestResult';
+import './RequistionDetail.scss'
+import Requisition from '../../containers/Requisition';
+import Container from '../../containers/Container';
+import Attachment from '../../containers/Attachment';
+import RaisedButton from 'material-ui/RaisedButton';
+import Popover, { PopoverAnimationVertical } from 'material-ui/Popover';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
+import IconButton from 'material-ui/IconButton';
+import SocialPerson from 'material-ui/svg-icons/social/person'
+import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import PreviwImage from '../../../assets/preview.png';
+import SendEmailImage from '../../../assets/send.png';
+import ExportImage from '../../../assets/export.png';
+import RedrawImage from '../../../assets/redraw.png';
+import AddonImage from '../../../assets/add-on.png';
+import RerunImage from '../../../assets/rerun.png';
+import MoreActionImage from '../../../assets/more-action.png';
+import VoidResultImage from '../../../assets/void-results.png';
+import ReviewResultImage from '../../../assets/review-results.png';
+import ApproveResultImage from '../../../assets/approve-results.png';
+import Paper from 'material-ui/Paper';
+import PatientInfoContainer from '../../containers/PatientInfoContainer'
+
+export default class RequisitionDetail extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 'a',
+      Previewopen: false,
+      Sendopen: false,
+    };
+  }
+  handleTouchTap = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
+
+    this.setState({
+      Previewopen: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+  SendhandleTouchTap = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
+
+    this.setState({
+      Sendopen: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+
+
+  handleChange = (value) => {
+    this.setState({
+      value: value,
+    });
+  };
+  handleRequestClose = () => {
+    this.setState({
+      Previewopen: false,
+
+    });
+  };
+  sendhandleRequestClose = () => {
+    this.setState({
+      Sendopen: false,
+
+    });
+  };
+  render() {
+    return (
+      <div className='full-height'>
+        <div className='basic-info'>
+          <h4> Basic Information</h4>
+          <div className='Border-all' style={{ height: '100%', marginRight: 10 }}>
+            <Paper zDepth={1} >
+              <IconButton style={{}}>
+                <SocialPerson />
+              </IconButton>
+              <span> <b >Patient</b></span>
+
+              <PatientInfoContainer />
+
+            </Paper>
+
+            <Paper zDepth={1} >
+              <div style={{ padding: 10, marginBottom: 10 }}>
+                <b >Lab Order</b>
+                <p className='text-basicInfo'>ORDER</p>
+                <p className='text-basicInfo'>New Order,<span>LIS</span></p>
+                <p className='text-basicInfo'>Dr.Sanjay Kumar</p>
+                <p className='text-basicInfo'>Palo Alto</p>
+                <p className='text-basicInfo'>Final Report Sent:<span></span></p>
+                <p className='text-basicInfo'>TrunAround Time:<span></span></p>
+                <p className='text-basicInfo'>Report Status:<span>No Report Sent</span></p>
+              </div>
+            </Paper>
+
+
+            <Paper zDepth={1} >
+
+              <div style={{ padding: 10, marginBottom: 10 }}>
+                <b >Visit</b>
+                <p className='text-basicInfo'>ORDER</p>
+                <p className='text-basicInfo'><b>Status</b><span>Results partially Uploaded</span></p>
+                <p className='text-basicInfo'>Theranos</p>
+                <p className='text-basicInfo'>Palo Alto</p>
+                <p className='text-basicInfo'>3200 Hillview Ave<span></span></p>
+                <p className='text-basicInfo'>HQ lab:<span>Newwark</span></p>
+                <p className='text-basicInfo'>Report Status:<span>No Report Sent</span></p>
+                <p className='text-basicInfo'>Fasting: <span>Yes</span></p>
+              </div>
+            </Paper>
+
+
+
+          </div>
+        </div>
+        <div className='requisition-details' >
+          <div>
+            <Tabs
+              value={this.state.value}
+              onChange={this.handleChange}>
+              <Tab label="Lab Result" value="a" >
+                <div className='result-view'>
+                  <div className='result-view__scroll'>
+                    <div className='labresult-topmenu'>
+                      <ul style={{ float: 'left' }}>
+                        <li onTouchTap={this.handleTouchTap}>
+                          <div>
+                            <img src={PreviwImage} width='45' height='40' />
+                            <Popover style={{ padding: 0 }}
+                              open={this.state.Previewopen}
+                              anchorEl={this.state.anchorEl}
+                              anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                              targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                              onRequestClose={this.handleRequestClose}
+                              animation={PopoverAnimationVertical}
+                              >
+                              <Menu className='Popover__menu-border'>
+                                <MenuItem primaryText="View Partial Report" />
+                                <MenuItem primaryText="Lab View" />
+                                <MenuItem primaryText="Physician View" />
+                                <MenuItem primaryText="Patient View" />
+                              </Menu>
+                            </Popover>
+                          </div>
+                          <p>Preview</p>
+                        </li>
+                        <li onTouchTap={this.SendhandleTouchTap}>
+                          <div>
+                            <img src={SendEmailImage} width='45' height='40' />
+                            <Popover
+                              open={this.state.Sendopen}
+                              anchorEl={this.state.anchorEl}
+                              anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+                              targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+                              onRequestClose={this.sendhandleRequestClose}
+                              animation={PopoverAnimationVertical}
+                              >
+                              <Menu className='Popover__menu-border'>
+                                <MenuItem primaryText="Create New Redraw Request" />
+                                <MenuItem primaryText="View Existing Redraw Request" />
+                              </Menu>
+                            </Popover>
+                          </div>
+                          <p>Send</p>
+                        </li>
+                        <li>
+                          <img src={RedrawImage} width='45' height='40' />
+                          <p>Redraw</p>
+                        </li>
+                        <li>
+                          <img src={RerunImage} width='45' height='40' />
+                          <p>Rerun</p>
+                        </li>
+                        <li>
+                          <img src={ExportImage} width='45' height='40' />
+                          <p>Export</p>
+                        </li>
+                        <li>
+                          <img src={AddonImage} width='45' height='40' />
+                          <p>Add-on</p>
+                        </li>
+                      </ul>
+
+                      <ul style={{ float: 'right' }}>
+                        <li>
+                          <img src={MoreActionImage} width='45' height='40' />
+                          <p>More Actions</p>
+                        </li>
+                        <li>
+
+                          <img src={VoidResultImage} width='45' height='40' />
+
+                          <p>Void Results</p>
+                        </li>
+                        <li>
+                          <img src={ReviewResultImage} width='45' height='40' />
+                          <p>Review Results</p>
+                        </li>
+                        <li>
+                          <img src={ApproveResultImage} width='45' height='40' />
+                          <p>Approved Results</p>
+                        </li>
+
+                      </ul>
+
+
+                    </div>
+                    <div className="border-line" style={{ margin: 0, width: '100%' }}></div>
+                    <LabTestResult />
+                  </div>
+                </div>
+              </Tab>
+              <Tab label="Requisition" value="b">
+                <div className='result-view'>
+                  <div className='result-view__scroll'>
+                    <Requisition />
+                  </div>
+                </div>
+              </Tab>
+              <Tab label="Container" value="c">
+                <div className='result-view'>
+                  <div className='result-view__scroll'>
+                    <h4 style={{ paddingLeft: 15, marginBottom: 0, }}>PSC Collection Container</h4>
+                    <Container />
+                  </div>
+                </div>
+              </Tab>
+              <Tab label="Attachment" value="at">
+                <div className='result-view'>
+                  <div class='result-view__scroll'>
+                    <Attachment />
+                  </div>
+                </div>
+              </Tab>
+            </Tabs>
+          </div>
+        </div>
+        <div className='requisition-notes' >
+          <div className='Border-all' style={{ height: '100%', marginLeft: 10 }}>
+            <b >Notes</b>
+            <div className='border-line' />
+            <p className='text-basicInfo'>Trinadh rao</p>
+            <p className='text-basicInfo'><span>M</span>,<span>08/08/1986</span>,<span>28 y</span> </p>
+            <p className='text-basicInfo'>(900)-089-8065(M)</p>
+            <p className='text-basicInfo'>(900)-089-8065(M)</p>
+            <p className='text-basicInfo'>trinadh@gmail.com</p>
+            <p className='text-basicInfo'>Marathahalli,</p>
+            <p className='text-basicInfo'>Dolylestown,<span>PA-18902</span></p>
+            <div className='border-line' />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}

@@ -1,0 +1,1 @@
+export const APIPATH='http://localhost:8090/api/';//api path to call the web api

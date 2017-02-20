@@ -1,0 +1,17 @@
+
+.result-view{
+    border: 1px solid gray;
+    height:85vh;
+   display: flex;
+  flex-flow: column;
+}
+.result-view__scroll{
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    overflow-y: scroll; /* or overflow-y: auto */
+}
+
+
+  

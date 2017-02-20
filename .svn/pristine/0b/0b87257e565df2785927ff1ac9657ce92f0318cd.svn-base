@@ -1,0 +1,5 @@
+.container{height:100%;}
+.core-layout__viewport {
+  padding:15px;
+  height:90%;
+}

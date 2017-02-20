@@ -1,0 +1,33 @@
+import React from 'react'
+import Header from '../../components/Header'
+import './CoreLayout.scss'
+import '../../styles/core.scss'
+import {createStore, applyMiddleware} from 'redux';
+import { connect } from 'react-redux';
+
+export class CoreLayout extends React.Component {
+render() {
+    const header = (this.props.isUserLoggedIn)
+      ? <Header />
+      : <div/>
+
+return(
+  <div className='container '>
+    {header}
+    <div className='core-layout__viewport'>
+      {this.props.children}
+    </div>
+  </div>
+);}
+}
+CoreLayout.propTypes = {
+  children : React.PropTypes.element.isRequired,
+  isUserLoggedIn : React.PropTypes.element.isRequired
+}
+
+const mapStateToProps = (state) => ({
+  isUserLoggedIn: state.login.isUserLoggedIn,
+});
+
+
+export default connect(mapStateToProps)(CoreLayout);

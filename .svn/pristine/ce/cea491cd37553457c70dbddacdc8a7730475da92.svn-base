@@ -1,0 +1,52 @@
+.accesion-heading{
+ margin:5px 0;
+}
+.accession-view{
+    width: 100%;
+     float: left;
+      height: 100%;
+}
+.labtest-view{
+    width: 16%;
+     border: 1px solid lightgray;
+      float: left;
+       margin-left: 10px;
+       height: 100%;
+}
+.labtest-view__headerText{
+     background-color:#757575;
+     color:#FFF;
+     height:35px;
+     text-align:center;
+     margin:0px;
+     line-height:35px;
+
+}
+.accession-view__table{width:99% !important;}
+.accession-view__Visit-column{
+    width: 120px;
+     padding: 0;
+}
+.accession-view__DOB-column{
+    width: 120px;
+     padding: 0;
+}
+.accession-view__Icon-column{
+
+    width: 50px;
+     padding: 0;
+}
+.accession-view__preview-column{
+
+    width: 55px;
+     padding: 0;
+}
+.accession-view__Id-column{
+     width: 80px;
+      padding-left: 0px; 
+}
+.accession-view__Gender-column{
+     width: 85px;
+      padding-left: 0px;
+      padding-right: 0px; 
+}

@@ -1,0 +1,28 @@
+import { combineReducers } from 'redux'
+import locationReducer from './location'
+import LabResultReducer from '../reducers/reducer-labresult';
+import RequisitionReducer from '../reducers/reducer-requisition';
+import ContainerReducer from '../reducers/reducer-container';
+import AttachmentReducer from '../reducers/reducer-attachement';
+import home from '../reducers/homeReducer';
+
+export const makeRootReducer = (asyncReducers) => {
+  return combineReducers({
+    location: locationReducer,
+    labresult: LabResultReducer,
+    requisition:RequisitionReducer,
+    container: ContainerReducer,
+    attachement: AttachmentReducer,
+    user: home,
+    ...asyncReducers
+  })
+}
+
+export const injectReducer = (store, { key, reducer }) => {
+  if (Object.hasOwnProperty.call(store.asyncReducers, key)) return
+
+  store.asyncReducers[key] = reducer
+  store.replaceReducer(makeRootReducer(store.asyncReducers))
+}
+
+export default makeRootReducer

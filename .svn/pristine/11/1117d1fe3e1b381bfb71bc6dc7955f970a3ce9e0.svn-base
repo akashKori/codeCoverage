@@ -1,0 +1,341 @@
+@import './variables/colors';
+/*! sass-mixins*/
+/// Helper mixin to size elements in a single line.
+/// This mixin is essentially a short hand to define all box properties include `width` , `height` ,`margin` , `padding` and all.
+/// @param {Number} $width - Element's width
+/// @param {Number} $height - Element's height
+/// @param {Number} $padding - Element's padding
+/// @param {Number} $margin - Element's margin
+/// @output
+/// ```css
+///          width: <values>;
+///          height:<values>;
+///          padding:<values>;
+///          margin: <values>;
+/// ```
+/// @example scss - box-model `.header`
+///   .header {
+///       @include box-model(45px,100%,0 15px,45px);
+///   }
+
+@mixin box-model($width:width,$height:height,$padding:padding,$margin:margin) {
+  width: $width;
+  height: $height;
+  padding: $padding;
+  margin: $margin;
+}
+/// Helper mixin to size elements in a single line.
+/// This mixin is essentially a short hand to define all box properties include `width` , `height`.
+/// @param {Number} $width - Element's width
+/// @param {Number} $height - Element's height
+/// @output
+/// ```css
+///          width: <values>;
+///          height:<values>;
+/// ```
+/// @example scss - sizing of  `.selector`
+///   .selector {
+///       @include size(45px,100%);
+///   }
+
+@mixin size($width:width,$height:height) {
+  width: $width;
+  height: $height;
+}
+
+/// Helper mixin to define properties of a text elements in a single line.
+/// This mixin is essentially a short hand to define all text apperance include `color` ,`background color`
+/// @param {List} $values
+/// @output
+/// ```css
+///          color:<value>;
+///          background-color:<value>;
+/// ```
+/// @example scss - text apperance `.selector`
+///   .selector {
+///       @include textcolor(#000,#000);
+///   }
+
+@mixin textcolor($color:color,$background-color:background-color) {
+  color: $color;
+  background-color: $background-color;
+}
+/// Helper mixin to define properties of a text elements in a single line.
+/// This mixin is essentially a short hand to define all text properties include `fontsize` , `line height`,`text alignment`
+/// @param {List} $values
+/// @output
+/// ```css
+///          font-size: <value>;
+///          line-height: <value>;
+///          text-align:<type>;
+/// ```
+/// @example scss - text alignment `.selector`
+///   .selector {
+///       @include textalign(12px,12px,center);
+///   }
+
+@mixin textalign($font-size:font-size,$line-height:line-height,$text-align:text-align) {
+  font-size: $font-size;
+  line-height: $line-height;
+  text-align:$text-align;
+}
+/// Generates cross-browser-compatible `border-radius` for a given element.
+/// @param {List} $values
+///
+/// @output
+/// ```css
+///          -webkit-border-radius: <values>;
+///          -moz-border-radius:<values>;
+///           border-radius: <values>;
+/// ```
+/// @example
+///   .selector {
+///     @include border-radius(20px 10px 5px);
+///   }
+///
+@mixin border-radius ($values) {
+	        -webkit-border-radius: $values; 
+            -moz-border-radius:$values;
+            -ms-border-radius:$values;
+	        border-radius: $values;
+}
+
+/// describes display of a division with display , left margin, right margin, padding a given division.
+/// @param {List} $values
+///
+/// @output
+/// ```css
+///          display:<type>;
+///          padding:<value>;
+///          margin-left:<value>;
+///          margin-right:<value>;
+/// ```
+/// @example
+///   .nav__link {
+///@include display(inline-block, 10px, 20px, 0);
+///}
+
+
+///
+@mixin display ($disp, $padding, $l-margin, $r-margin) {
+  display: $disp;
+  padding: $padding;
+  margin-left: $l-margin;
+  margin-right: $r-margin;
+}
+
+
+
+
+
+/// Generates cross-browser-compatible `box-shadow` for a given element.
+/// @param {List} $values
+/// @output
+/// ```css
+///           -webkit-box-shadow: <values>;
+///           -moz-box-shadow:<values>;
+///           box-shadow: <values>;
+/// ```
+/// @example
+///   .selector {
+///     @include box-shadow(5px 5px 10px 5px #aaa);
+///   }
+///
+@mixin box-shadow ($values...) {
+	        -webkit-box-shadow: $values; // iOS Safari 3.2 - 4.3, Android 2.1+
+	        box-shadow: $values;
+            -moz-box-shadow:$values;
+}
+/// Generates cross-browser-compatible `box-sizing` output for a given element.
+/// @param {String} $type [border-box]
+///
+/// @output
+/// ```css
+///      -webkit-box-sizing: <type>;
+///      -moz-box-sizing: <type>;
+///       box-sizing: <type>;
+/// ```
+///
+/// @example
+///   .selector {
+///     @include box-sizing;
+///   }
+///
+@mixin box-sizing ($type: border-box) {
+	-webkit-box-sizing: $type; // Safari <= 5.0, Chrome <= 9.0, iOS Safari 3.2 - 4.3 and Android 2.1 - 3.0
+	   -moz-box-sizing: $type; // FF 2.0 - 28.0
+	        box-sizing: $type; // IE 8, Opera 9.5+
+}
+/// Add Breakpoint between specified device-widths.
+/// @param {String} $point
+/// @param {Number} $bp-mobile-width [640px]
+/// @param {Number} $bp-tablet-width [1024px]
+///
+/// @output
+/// ```css
+///   @media (max-width: <bp-mobile-width>) {
+///      <content>
+///   }
+/// ```
+///
+/// @example
+///   .selector {
+///     @include breakpoints(mobile,  320px) { width: 100%; }
+///   }
+///
+@mixin breakpoints($point, $bp-mobile-width: 640px, $bp-tablet-width: 1024px) {
+	$bp-mobile: '(max-width: #{$bp-mobile-width})';
+	$bp-tablet: '(min-width: #{$bp-mobile-width}) and (max-width: #{$bp-tablet-width})';
+	$bp-desktop: '(min-width: #{$bp-tablet-width})';
+
+	@if $point == mobile {
+		@media #{$bp-mobile} {
+			@content;
+		}
+	}
+	@else if $point == tablet {
+		@media #{$bp-tablet} {
+			@content;
+		}
+	}
+	@else if $point == desktop {
+		@media #{$bp-desktop} {
+			@content;
+		}
+	}
+	@else {
+		@warn "You are requesting an invalid breakpoint: `#{$point}`.";
+	}
+}
+
+///
+/// Generates `calc` function which allows mathematical expressions for a given property.
+/// @param {String} $property
+/// @param {String} $expression
+///
+/// @output
+/// ```css
+///   <property>: -webkit-calc(<expression>);
+///   <property>: calc(<expression>);
+/// ```
+///
+/// @example
+///  .selector {
+///    @include calc(width, "600px - 2em");
+///  }
+///
+@mixin calc ($property, $expression) {
+	#{$property}: -webkit-calc(#{$expression});
+	#{$property}: calc(#{$expression});
+}
+
+///
+/// Generates flexbox properties for a given element.
+/// @output
+/// ```css
+///   display: -webkit-box;
+///   display: -moz-box;
+///   display: -ms-flexbox;
+///   display: -webkit-flex;
+///   display: flex;
+/// ```
+///
+/// @example
+///   .selector {
+///     @include display-flex;
+///   }
+///
+@mixin display-flex {
+	display: -webkit-box;  // Chrome 20-, iOS 6-, Safari 3.1  -6
+	display: -moz-box;     // FF 19-
+	display: -webkit-flex; // Chrome 21 - 28
+	display: -ms-flexbox;  // IE 10
+	display: flex;         // FF 20+, Chrome 29+, Opera 12.1, 17+
+}
+
+///
+/// Add flex values to element.
+///
+/// @param {Arglist} $values
+///
+/// @output
+/// ```css
+///     -webkit-box-flex: <values>;
+///     -moz-box-flex: <values>;
+///     -webkit-flex: <values>;
+///     -ms-flex: <values>;
+///      flex: <values>;
+/// ```
+///
+/// @example
+///   .selector {
+///     @include flex(1 1 auto);
+///   }
+///
+@mixin flex ($values...) {
+	  -webkit-box-flex: $values; // Chrome 20-, iOS 6-, Safari 3.1 - 6
+	   -moz-box-flex: $values; // FF 19-
+	    -webkit-flex: $values; // Chrome 21 - 28
+	     -ms-flex: $values; // IE 10
+	      flex: $values; // FF 20+, Chrome 29+, Opera 12.1, 17+
+}
+
+///
+/// Add flex order to element.
+///
+/// @param {Number} $value
+///
+/// @output
+/// ```css
+///      -webkit-box-ordinal-group: <value>;
+///      -moz-box-ordinal-group: <value>;
+///       -ms-flex-order: <value>;
+///       -webkit-order: <value>;
+///       order: <value>;
+/// ```
+///
+/// @example
+///   .selector {
+///     @include order(1);
+///   }
+///
+@mixin order ($value) {
+            -webkit-box-ordinal-group: $value; // Chrome 20-, iOS 6-, Safari 3.1 - 6
+            -moz-box-ordinal-group: $value; // FF 19-
+            -ms-flex-order: $value; // IE 10
+            -webkit-order: $value; // Chrome 21 - 28
+            order: $value; // FF 20+, Chrome 29+, Opera 12.1, 17+
+}
+
+///
+/// Genetrate a border for element
+///
+///
+/// @output
+/// ```css
+///      border-all:(1px,solid,$color-gray)
+/// ```
+///
+/// @example
+///   .selector {
+///     @include border-all;
+///   }
+///
+@mixin border-all($width, $style, $color) {
+  border-width: $width;
+  border-style: $style;
+  border-color: $color;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

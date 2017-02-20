@@ -1,0 +1,79 @@
+import React,{PropTypes} from 'react';
+import './HomeView.scss'
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
+import { connect } from 'react-redux';
+import * as homeAction from  '../modules/homeAction';
+
+//export const HomeView = () => (
+class HomeView extends React.Component {
+
+   constructor(props,context) {
+        super(props,context);
+        this.state ={
+          user: {userName: "", password:""}
+        };
+
+          this.userNameChange = this.userNameChange.bind(this);
+          this.passwordChange = this.passwordChange.bind(this);
+          this.createLogin = this.createLogin.bind(this);
+    }
+
+    userNameChange(event) {
+      const user = this.state.user;
+      user.userName = event.target.value;
+        this.setState({user: user})
+    }
+
+    passwordChange(event) {
+      const user = this.state.user;
+      user.password = event.target.value;
+        this.setState({user: user})
+    }
+
+    createLogin()
+    {
+      this.props.dispatch(homeAction.createLogin(this.state.user));
+       window.location.href = "http://localhost:3000/requisition"
+
+      //const user = this.state.user;
+      //alert(user.userName + ' '+ user.password);
+    }
+
+render(){
+  return(
+    <div className="login">
+        <Paper zDepth={2} className="login-paper">
+         {/*<h1>{this.props.userReduser}</h1>*/}
+
+          <h4 className="login__heading">Login</h4>
+          <div className="login__content">
+            <TextField hintText="User Name" value={this.state.user.userName} floatingLabelText="User Name" fullWidth={true} onChange={this.userNameChange}/>
+          </div>
+          <div className="login__content">
+             <TextField hintText="Password " value={this.state.user.password}  floatingLabelText="Password" type="password" fullWidth={true} onChange={this.passwordChange}/>
+           </div>
+          <div className="login__btn">
+            <RaisedButton label="Login" onTouchTap={this.createLogin}  primary={true} fullWidth={true} />
+          </div>
+
+        </Paper>
+      </div>
+    );
+  }
+}
+
+function mapStateToProps(state,ownProps)
+{
+  return {
+    userReduser: state.user
+  };
+}
+
+
+export default connect(mapStateToProps)(HomeView)
+//export default HomeView
+
+
+

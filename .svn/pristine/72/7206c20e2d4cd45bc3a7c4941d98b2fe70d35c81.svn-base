@@ -1,0 +1,18 @@
+//this file contains action related for user login
+
+export const CREATE_LOGIN = 'CREATE_LOGIN'
+
+// ------------------------------------
+// Create Actions
+// ------------------------------------
+//createLogin is the function  which accepts the user data  
+export function createLogin (user) {
+   user.isLogin=true;
+  //returning the action 
+  //returning the plain object that must have type property 
+  //for CREATE_LOGIN action passing user data
+  return {
+    type    : CREATE_LOGIN, 
+    user : user
+  };
+}

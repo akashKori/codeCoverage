@@ -1,0 +1,125 @@
+import { browserHistory } from 'react-router'
+import {APIPATH} from '../../../constant/common'
+// ------------------------------------
+// Constants
+// ------------------------------------
+export const SEARCH_REQUISITION = 'SEARCH_REQUISITION'
+export const GET_REQUISITION = 'GET_REQUISITION'
+export const GET_VISIT_DETAILS = 'GET_VISIT_DETAILS'
+export const GET_PATIENT_BASICINFO = 'GET_PATIENT_BASICINFO'
+export const REQUISITION_REQUEST_SORTBY = 'REQUISITION_REQUEST_SORTBY'
+export const REQUISITION_RECEIVE_SORTBY = 'REQUISITION_RECEIVE_SORTBY'
+// ------------------------------------
+// Actions
+// ------------------------------------
+
+/*  This is a thunk, meaning it is a function that immediately
+    returns a function for lazy evaluation. It is incredibly useful for
+    creating async actions, especially when combined with redux-thunk! */
+export function requestRequisitionSortBy(sortBy,sortDir,page,pageSize) { 
+return (dispatch) => {
+    dispatch({
+      type: REQUISITION_REQUEST_SORTBY,
+    });
+
+    fetch(APIPATH+'requisition/GetVisitList?sortField='+sortBy+'&sortDirection='+sortDir+'&pageNumber='+page+'&pageSize='+pageSize)
+    .then((response) => response.json())
+    .then((response) => 
+    {
+       let requisitionList=response.Data;
+     dispatch(receiveRequisitionSortby(requisitionList))
+    });
+ 
+  }
+}
+
+export function getVisitDetails(PatientVisitId='') {
+return (dispatch) => {
+    fetch(APIPATH+'requisition/GetRequisitionPatientInfo?patientvisitId='+PatientVisitId)
+    .then((response) => response.json())
+    .then((patient) => dispatch(getPatientBasicInfo(patient)));
+
+    dispatch({
+      type: GET_VISIT_DETAILS,
+      PatientVisitId
+    });    
+
+    browserHistory.push('/requisition')
+  }
+}
+
+export function getPatientBasicInfo(patient) {
+return {
+      type: GET_PATIENT_BASICINFO,
+      patient   
+  }
+}
+
+export function searchRequisition(sortBy,sortDir,page,pageSize) {
+return (dispatch) => {
+    dispatch({
+      type: SEARCH_REQUISITION,
+    });
+//APIPATH+'Requisition/Test?test=lakshmi&test1=testing'
+    fetch(APIPATH+'requisition/GetVisitList?sortField='+sortBy+'&sortDirection='+sortDir+'&pageNumber='+page+'&pageSize='+pageSize)
+    .then((response) => response.json())
+   
+    .then((response) => 
+    {
+     
+       let requisitionList=response.Data;
+       let totalCount=response.TotalCount;
+      // alert(totalCount)
+
+      dispatch(getRequisition(requisitionList,totalCount))
+    });
+  }
+}
+
+export function getRequisition(requisitionList,totalCount) {
+  return {
+    type: GET_REQUISITION,
+    requisitionList,totalCount,
+    isUserLoggedIn:true
+  };
+}
+export function receiveRequisitionSortby(requisitionList) {
+ 
+  return {
+    type: REQUISITION_RECEIVE_SORTBY,
+    requisitionList
+  };
+}
+
+// ------------------------------------
+// Reducer
+// ------------------------------------
+const initialState = {requisitionList:[], selectedVisitId:'', isRequisitionLoaded:false,isUserLoggedIn:false,patientInfo:{},totalCount:0}
+export default function searchRequisitionReducer (state = initialState, action) {
+ switch(action.type)
+ {
+  
+   case "GET_REQUISITION":
+
+   return Object.assign({},state,
+   {requisitionList : action.requisitionList,totalCount: action.totalCount,isRequisitionLoaded:true, isUserLoggedIn:true});
+
+ case "SEARCH_REQUISITION":   
+   return Object.assign({},state,
+   {requisitionList : action.requisitionList,isRequisitionLoaded : action.isRequisitionLoaded,isUserLoggedIn:true});
+case "REQUISITION_REQUEST_SORTBY":   
+   return Object.assign({},state,
+   {requisitionList : action.requisitionList,isRequisitionLoaded : action.isRequisitionLoaded});
+case "REQUISITION_RECEIVE_SORTBY":   
+   return Object.assign({},state,
+   {requisitionList : action.requisitionList,isRequisitionLoaded : action.isRequisitionLoaded});
+case "GET_VISIT_DETAILS":   
+   return Object.assign({},state,
+   {selectedVisitId : action.visiId});
+case "GET_PATIENT_BASICINFO":   
+   return Object.assign({},state,
+   {requisitionList : action.requisitionList,patientInfo:action.patient});
+   default:
+   return state;
+ }
+}

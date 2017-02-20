@@ -1,0 +1,84 @@
+import { browserHistory } from 'react-router'
+import {APIPATH} from '../../../constant/common'
+// ------------------------------------
+// Constants
+// ------------------------------------
+export const SEARCH_REQUISITION = 'SEARCH_REQUISITION'
+export const GET_REQUISITION = 'GET_REQUISITION'
+export const GET_VISIT_DETAILS = 'GET_VISIT_DETAILS'
+export const GET_PATIENT_BASICINFO = 'GET_PATIENT_BASICINFO'
+// ------------------------------------
+// Actions
+// ------------------------------------
+
+/*  This is a thunk, meaning it is a function that immediately
+    returns a function for lazy evaluation. It is incredibly useful for
+    creating async actions, especially when combined with redux-thunk! */
+
+export function getVisitDetails(visiId='') {
+return (dispatch) => {
+    fetch(APIPATH+'requisition/GetRequisitionPatientInfo?patientvisitId='+visiId)
+    .then((response) => response.json())
+    .then((patient) => dispatch(getPatientBasicInfo(patient)));
+
+
+    dispatch({
+      type: GET_VISIT_DETAILS,
+      visiId
+    });    
+
+    browserHistory.push('/requisition')
+  }
+}
+
+export function getPatientBasicInfo(patient) {
+return {
+      type: GET_PATIENT_BASICINFO,
+      patient   
+  }
+}
+
+export function searchRequisition() {
+return (dispatch) => {
+    dispatch({
+      type: SEARCH_REQUISITION,
+    });
+
+    fetch(APIPATH+'requisition/GetVisitList')
+    .then((response) => response.json())
+    .then((requisitionList) => dispatch(getRequisition(requisitionList)));
+  }
+}
+
+export function getRequisition(requisitionList) {
+  return {
+    type: GET_REQUISITION,
+    requisitionList,
+    isUserLoggedIn:true
+  };
+}
+// ------------------------------------
+// Reducer
+// ------------------------------------
+const initialState = {requisitionList:[], selectedVisitId:'', isRequisitionLoaded:false,isUserLoggedIn:false,patientInfo:{}}
+export default function searchRequisitionReducer (state = initialState, action) {
+ switch(action.type)
+ {
+   case "GET_REQUISITION":
+   return Object.assign({},state,
+   {requisitionList : action.requisitionList, isRequisitionLoaded:true, isUserLoggedIn:true});
+
+ case "SEARCH_REQUISITION":   
+   return Object.assign({},state,
+   {requisitionList : action.requisitionList,isRequisitionLoaded : action.isRequisitionLoaded,isUserLoggedIn:true});
+
+case "GET_VISIT_DETAILS":   
+   return Object.assign({},state,
+   {selectedVisitId : action.visiId});
+case "GET_PATIENT_BASICINFO":   
+   return Object.assign({},state,
+   {requisitionList : action.requisitionList,patientInfo:action.patient});
+   default:
+   return state;
+ }
+}

@@ -1,0 +1,44 @@
+.accesion-heading{
+ margin:5px 0;
+}
+.accession-view{
+    width: 83%;
+     float: left;
+      height: 100%;
+}
+.labtest-view{
+    width: 16%;
+     border: 1px solid lightgray;
+      float: left;
+       margin-left: 10px;
+       height: 100%;
+}
+.labtest-view__headerText{
+     background-color:#757575;
+     color:#FFF;
+     height:35px;
+     text-align:center;
+     margin:0px;
+     line-height:35px;
+
+}
+
+.accession-view__Icon-column{
+
+    width: 40px;
+     padding: 0;
+}
+.accession-view__preview-column{
+
+    width: 55px;
+     padding: 0;
+}
+.accession-view__Id-column{
+     width: 70px;
+      padding-left: 0px; 
+}
+.accession-view__Gender-column{
+     width: 50px;
+      padding-left: 0px;
+      padding-right: 0px; 
+}

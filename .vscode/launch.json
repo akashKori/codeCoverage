@@ -1,0 +1,50 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "launch Chrome",
+            "type": "chrome",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "sourceMaps": true,
+            "webRoot":"${workspaceRoot}/" ,
+            "skipFiles": [
+                "node_modules/**/*.js",
+                 "lib/**/*.js"          
+            ]            
+
+           
+        },
+        {
+            "name": "Attach chrome with sourcemaps",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "sourceMaps": true,
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceRoot}"
+        },
+        {
+            "name": "Launch edge with source maps",
+            "type": "edge",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceRoot}/",
+            "sourceMaps": true
+        },
+        {
+            "name": "attach edge without source maps",
+            "type": "edge",
+            "request": "launch",
+           "file": "${workspaceRoot}/index.html"
+        },
+         {
+            "name": "Launch localhost",
+            "type": "firefox",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceRoot}"
+        }
+    ]
+   
+}

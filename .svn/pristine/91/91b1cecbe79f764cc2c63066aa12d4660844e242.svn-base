@@ -1,0 +1,77 @@
+@import 'base';
+@import '~normalize.css/normalize';
+
+// Some best-practice CSS that's useful for most apps
+// Just remove them if they're not what you want
+html {
+ @include box-sizing;
+}
+html,
+body {
+  @include box-model(null,100%,0px,0px);
+  font-size: $base-font-size;
+  font-family: $base-font-stack;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+/* Busy Indicator styles*/
+.busy-indicator{
+    @include size(100%,100%);
+     @include display-flex;
+     min-height: 300px;
+     align-items: center;
+     justify-content: center;
+     &__spinner{
+       @include box-model(50px,50px,25px,null);
+     }
+}
+/* 
+ #Pagination styles
+*/
+.pagination{
+        float:$float-right;
+        &__paging-text{
+            @include textalign($base-font-size+1px,23px,null);
+            float:$float-left;
+            padding: 0 20px;
+        }
+        &__paging-number{
+            float: $float-right;
+            margin: 5px 8px;
+        }
+    }
+
+/** 
+* styles for error message
+*/
+.error-message {
+  display: block;
+  color: $color-red;
+  margin: 5px;
+  min-height:12px;
+}
+/* styles for removing the input x icon in IE Browser*/
+input::-ms-clear {
+    display: none;
+}
+
+input::-ms-reveal {
+    display: none;
+}
+/* override the button default text transform*/
+button{
+text-transform: capitalize!important;
+}
+/**
+page  float, clearfix, height class properties 
+*/
+
+.flt-rt{float: $float-right; }
+.flt-lt{float:$float-left; }
+.clearfix{clear:both;}
+.full-height{height:$height100;}
+.border-line{border-top:1px solid $color-light-gray; margin:6px 0}

@@ -1,0 +1,205 @@
+import React from 'react';
+
+import {Table, TableBody,TableFooter,PagiFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+
+import UltimatePagination from './UltimatePagination'
+
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+
+
+const styles = {
+  label: {
+    display: 'block'
+  },
+  input: {
+    width: 100
+  },
+   propContainer: {
+    width: 200,
+    overflow: 'hidden',
+    margin: '20px auto 0',
+  },
+  propToggleHeader: {
+    margin: '20px auto 10px',
+  },
+};
+
+const tableData = [
+  {
+    name: 'John Smith',
+    status: 'Employed',
+    selected: true,
+  },
+  {
+    name: 'Randal White',
+    status: 'Unemployed',
+  },
+  {
+    name: 'Stephanie Sanders',
+    status: 'Employed',
+    selected: true,
+  },
+  {
+    name: 'Steve Brown',
+    status: 'Employed',
+  },
+  {
+    name: 'Joyce Whitten',
+    status: 'Employed',
+  },
+  {
+    name: 'Samuel Roberts',
+    status: 'Employed',
+  },
+  {
+    name: 'Adam Moore',
+    status: 'Employed',
+  },
+];
+
+
+
+class Requisition extends React.Component {
+  constructor() {
+    super();
+
+
+    this.onTotalPagesChange = this.onTotalPagesChange.bind(this);
+    this.onCurrentPageChange = this.onCurrentPageChange.bind(this);
+    this.onPageChangeFromPagination = this.onPageChangeFromPagination.bind(this);
+
+    this.state = {
+     
+      value: null,
+      currentPage: 1,
+      totalPages:10
+    };
+  }
+
+    handleChange = (event, index, value) => this.setState({value});
+ 
+
+  onTotalPagesChange(event) {
+    this.setState({totalPages: +event.target.value});
+  }
+
+  onCurrentPageChange(event) {
+    this.setState({currentPage: +event.target.value});
+  }
+
+  onPageChangeFromPagination(newPage) {
+    this.setState({currentPage: newPage});
+  }
+
+  render() {
+    return (
+      
+      <div style={{ margin: '0 auto' }} >
+    <h2>Requisitions List View</h2>
+    <div>
+            <label htmlFor="pageSizes" style={styles.label}>
+                        Page size:
+                        </label>
+                    <div>
+                        <SelectField
+                        floatingLabelText="Please select"
+                        value={this.state.value}
+                        onChange={this.handleChange} >
+                        
+                        <MenuItem value={null} primaryText="" />
+                        <MenuItem value={2} primaryText="2" />
+                        <MenuItem value={5} primaryText="5" />
+                        </SelectField>
+                </div>
+            </div>
+  <Table>
+          <TableHeader
+            displaySelectAll={this.state.showCheckboxes}
+            adjustForCheckbox={this.state.showCheckboxes}
+            enableSelectAll={this.state.enableSelectAll}
+          >
+            <TableRow>
+              <TableHeaderColumn colSpan="3" tooltip="Super Header" style={{textAlign: 'center'}}>
+                Super Header
+              </TableHeaderColumn>
+            </TableRow>
+            <TableRow>
+              <TableHeaderColumn tooltip="The ID">ID</TableHeaderColumn>
+              <TableHeaderColumn tooltip="The Name">Name</TableHeaderColumn>
+              <TableHeaderColumn tooltip="The Status">Status</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody
+            displayRowCheckbox={this.state.showCheckboxes}
+            deselectOnClickaway={this.state.deselectOnClickaway}
+            showRowHover={this.state.showRowHover}
+            stripedRows={this.state.stripedRows}
+          >
+            {tableData.map( (row, index) => (
+              <TableRow key={index} selected={row.selected}>
+                <TableRowColumn>{index}</TableRowColumn>
+                <TableRowColumn>{row.name}</TableRowColumn>
+                <TableRowColumn>{row.status}</TableRowColumn>
+              </TableRow>
+              ))}
+          </TableBody>
+     <TableFooter>
+            <TableRow>
+              <TableRowColumn colSpan="3">
+               <UltimatePagination  currentPage={this.state.currentPage}
+            totalPages={this.state.totalPages}
+            onChange={this.onPageChangeFromPagination} />
+                  <div>
+            <label htmlFor="totalPages" style={styles.label}>
+              Total pages:
+            </label>
+
+            
+            <input
+              type="number"
+              id="totalPages"
+              style={styles.input}
+              value={this.state.totalPages}
+              min="1"
+              onChange={this.onTotalPagesChange}
+            />
+             
+          </div>
+            
+          <div>
+            <label htmlFor="currentPage" style={styles.label}>
+              Current page:
+            </label>
+            <input
+              type="number"
+              id="currentPage"
+              style={styles.input}
+              value={this.state.currentPage}
+              min="1"
+              max={this.state.totalPages}
+              onChange={this.onCurrentPageChange}
+            />
+          </div>
+              </TableRowColumn>
+            </TableRow>
+          </TableFooter>
+  </Table>
+
+ 
+ 
+    
+  </div>
+    );
+  }
+}
+
+
+
+// Counter.propTypes = {
+//   counter     : React.PropTypes.number.isRequired,
+//   doubleAsync : React.PropTypes.func.isRequired,
+//   increment   : React.PropTypes.func.isRequired
+// }
+
+export default Requisition

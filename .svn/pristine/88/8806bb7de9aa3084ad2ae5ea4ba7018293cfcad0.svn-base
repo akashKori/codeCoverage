@@ -1,0 +1,40 @@
+//action to set the visitId
+export function SetPatientVisitId(patientVisitId){
+ return (dispatch) => {
+    dispatch({
+      type: "SET_PATEINTVISITID",
+    
+   });
+ dispatch(GetPatientVisitId(patientVisitId));
+}}
+export function GetPatientVisitId(patientVisitId){
+  
+ return (dispatch) => {
+    dispatch({
+      type: "GET_PATEINTVISITID",
+      patientVisitId
+   });
+}}
+
+const initialState={
+    patientVisitId:"",
+    settingVisitId:false
+}
+//reducer to set the visitId
+export default function SetPatientVisitIdReducer(state=initialState,action){
+
+    switch (action.type) {
+  case "SET_PATEINTVISITID":
+        return Object.assign({}, state, {
+          settingVisitId:true,
+    });
+    case "GET_PATEINTVISITID":
+        return Object.assign({}, state, {
+          patientVisitId: action.patientVisitId,
+          settingVisitId:false
+    });
+      default:
+        return state;
+}
+ 
+} 

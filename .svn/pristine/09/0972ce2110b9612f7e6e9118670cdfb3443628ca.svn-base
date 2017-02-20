@@ -1,0 +1,267 @@
+import { browserHistory } from 'react-router'
+import { APIPATH } from '../../../constant/common'
+import * as loginAction from '../../Login/modules/loginAction'
+// ------------------------------------
+// Constants
+// ------------------------------------
+export const SEARCH_REQUISITION = 'SEARCH_REQUISITION'
+export const GET_REQUISITION = 'GET_REQUISITION'
+export const GET_VISIT_DETAILS = 'GET_VISIT_DETAILS'
+export const GET_PATIENT_BASICINFO = 'GET_PATIENT_BASICINFO'
+export const REQUISITION_REQUEST_SORTBY = 'REQUISITION_REQUEST_SORTBY'
+export const REQUISITION_RECEIVE_SORTBY = 'REQUISITION_RECEIVE_SORTBY'
+export const REQUISITION_DETAILSTOEXPORT = 'REQUISITION_DETAILSTOEXPORT'
+
+// ------------------------------------
+// Actions
+// ------------------------------------
+
+/*  This is a thunk, meaning it is a function that immediately
+    returns a function for lazy evaluation. It is incredibly useful for
+    creating async actions, especially when combined with redux-thunk! */
+export function requestRequisitionSortBy(sortBy, sortDir, page, pageSize) {
+  return (dispatch) => {
+    //fetching token stored in localStorage
+    //let token = sessionStorage.getItem('jwtToken');
+    let token = localStorage.getItem('jwtToken');
+
+    //check the token is available, if available do the api call
+    if (token) {
+      //passing the token in header with url
+      fetch(APIPATH + 'requisition/GetVisitList?sortField=' + sortBy + '&sortDirection=' + sortDir + '&pageNumber=' + page + '&pageSize=' + pageSize,
+        {
+          method: 'GET',
+          dataType: 'application/json',
+          headers: {//passing the token in header to check Authorization
+            Authorization: 'Bearer ' + token,
+          }
+        }
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          if (response.Message != null && response.Message != 'undefined' && response.Message == 'Authorization has been denied for this request.') {
+            alert(response.Message);
+            dispatch(loginAction.createLogout(false));
+          }
+          else {
+            let requisitionList = response.Data;
+            dispatch(receiveRequisitionSortby(requisitionList))
+          }
+        });
+    }
+    else {
+      alert('token not saved');
+      dispatch(loginAction.createLogout(false));
+    }
+    dispatch({
+      type: REQUISITION_REQUEST_SORTBY,
+    });
+  }
+}
+
+/***
+ * requestRequisitionDetailsToExport: used to export all records from server
+ *  @function requestRequisitionDetailsToExport
+ * @param {string} sortBy: used to get the records according to VisitSequenceId
+ * @param {string} sortDir: used to get the records according Ascending Order  
+ * @param {integer} page: used to get the records in one Page by giving Page no: 1   
+ * @param {integer} pageSizeNum: used to get the whole records by giving pageSizeNum : -1  
+ * @return {Array} recordList : contains all the requisitionList
+ */
+
+export function requestRequisitionDetailsToExport(sortBy, sortDir, page, pageSizeNum) {
+  // alert(pageSizeNum)
+  return (dispatch) => {
+    //fetching token stored in localStorage
+    //let token = sessionStorage.getItem('jwtToken');
+    let token = localStorage.getItem('jwtToken');
+
+    //check the token is available, if available do the api call
+    if (token) {
+      //passing the token in header with url
+      fetch(APIPATH + 'requisition/GetVisitList?sortField=' + sortBy + '&sortDirection=' + sortDir + '&pageNumber=' + page + '&pageSize=' + pageSizeNum,
+        {
+          method: 'GET',
+          dataType: 'application/json',
+          headers: {//passing the token in header to check Authorization
+            Authorization: 'Bearer ' + token,
+          }
+        }
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          if (response.Message != null && response.Message != 'undefined' && response.Message == 'Authorization has been denied for this request.') {
+            alert(response.Message);
+            dispatch(loginAction.createLogout(false));
+          }
+          else {
+            let recordList = response.Data;
+            dispatch(receiveRequisitionDetailsToExport(recordList))
+          }
+        });
+    }
+    else {
+      alert('token not saved');
+      dispatch(loginAction.createLogout(false));
+    }
+    dispatch({
+      type: REQUISITION_DETAILSTOEXPORT,
+    });
+  }
+}
+
+
+export function getVisitDetails(PatientVisitId = '') {
+  return (dispatch) => {
+    //fetching token stored in localStorage
+    //let token = sessionStorage.getItem('jwtToken');
+    let token = localStorage.getItem('jwtToken');
+
+    //check the token is available, if available do the api call
+    if (token) {
+      //passing the token in header with url
+      fetch(APIPATH + 'requisition/GetRequisitionPatientInfo?patientvisitId=' + PatientVisitId,
+        {
+          method: 'GET',
+          dataType: 'application/json',
+          headers: {//passing the token in header to check Authorization
+            Authorization: 'Bearer ' + token,
+          }
+        }
+      )
+        .then((response) => response.json())// converting to json
+        .then((patient) => { //converting to patient, patient is Object
+          //if token is invalid or expaired service will return Message 'Authorization has been denied for this request.'
+          //if return message call createLogout action that will redirect to logout page
+          if (patient.Message != null && patient.Message != 'undefined' && patient.Message == 'Authorization has been denied for this request.') {
+            alert(patient.Message);
+            dispatch(loginAction.createLogout(false));
+          }
+          else {//call getPatientBasicInfo action to get patient detail
+            dispatch(getPatientBasicInfo(patient))
+          }
+        });
+    }
+    else {//if token is not saved show alert and redirect to login page
+      alert('token not saved');
+      dispatch(loginAction.createLogout(false));
+    }
+    //returning the action 
+    //returning the plain object that must have type property 
+    //for GET_VISIT_DETAILS action passing PatientVisitId
+    dispatch({
+      type: GET_VISIT_DETAILS,
+      PatientVisitId
+    });
+  }
+}
+
+export function getPatientBasicInfo(patient) {
+  return {
+    type: GET_PATIENT_BASICINFO,
+    patient
+  }
+}
+
+export function searchRequisition(sortBy, sortDir, page, pageSize) {
+  return (dispatch) => {
+    //fetching token stored in localStorage
+    //let token = sessionStorage.getItem('jwtToken');
+    let token = localStorage.getItem('jwtToken');
+
+    //check the token is available, if available do the api call
+    if (token) {
+      fetch(APIPATH + 'requisition/GetVisitList?sortField=' + sortBy + '&sortDirection=' + sortDir + '&pageNumber=' + page + '&pageSize=' + pageSize,
+        {
+          method: 'GET',
+          dataType: 'application/json',
+          headers: { //passing the token in header to check Authorization
+            Authorization: 'Bearer ' + token,
+          }
+        }
+      )
+        .then((response) => response.json())// converting to json
+        .then((response) => {//converting to requisitionList, requisitionList is collection of requisition
+          //if token is invalid or expaired service will return Message 'Authorization has been denied for this request.'
+          //if return message call createLogout action that will redirect to logout page
+          if (response.Message != null && response.Message != 'undefined' && response.Message == 'Authorization has been denied for this request.') {
+            alert(response.Message);
+            dispatch(loginAction.createLogout(false));
+          }
+          else {//call getRequisition action to get requisition list
+            let requisitionList = response.Data;
+            let totalCount = response.TotalCount;
+            dispatch(getRequisition(requisitionList, totalCount))
+          }
+        });
+    }
+    else {//if token is not saved show alert and redirect to login page
+      alert('token not saved');
+      dispatch(loginAction.createLogout(false));
+    }
+
+    dispatch({
+      type: SEARCH_REQUISITION,
+    });
+  }
+}
+
+export function getRequisition(requisitionList, totalCount) {
+  return {
+    type: GET_REQUISITION,
+    requisitionList, totalCount,
+    isUserLoggedIn: true
+  };
+}
+export function receiveRequisitionSortby(requisitionList) {
+
+  return {
+    type: REQUISITION_RECEIVE_SORTBY,
+    requisitionList
+  };
+}
+
+/**
+ * receiveRequisitionDetailsToExport: Used to get the whole data from server and maintaing a seperate function
+ * @function :  receiveRequisitionDetailsToExport
+ * @param{Array} recordList: contains all requisitionList records
+ * @returns{Array} recordList :  contains all requisitionList records
+ */
+export function receiveRequisitionDetailsToExport(recordList) {
+  return {
+    type: REQUISITION_DETAILSTOEXPORT,
+    recordList
+  }
+}
+
+// ------------------------------------
+// Reducer
+// ------------------------------------
+const initialState = { requisitionList: [], recordList: [], selectedVisitId: '', isRequisitionLoaded: false, isUserLoggedIn: false, patientInfo: {}, totalCount: 0 }
+export default function searchRequisitionReducer(state = initialState, action) {
+  switch (action.type) {
+    case "GET_REQUISITION":
+      return Object.assign({}, state,
+        { requisitionList: action.requisitionList, totalCount: action.totalCount, isRequisitionLoaded: true, isUserLoggedIn: true });
+    case "SEARCH_REQUISITION":
+      return Object.assign({}, state,
+        { requisitionList: action.requisitionList, isRequisitionLoaded: action.isRequisitionLoaded, isUserLoggedIn: true });
+    case "REQUISITION_REQUEST_SORTBY":
+      return Object.assign({}, state,
+        { requisitionList: action.requisitionList, isRequisitionLoaded: action.isRequisitionLoaded });
+    case "REQUISITION_RECEIVE_SORTBY":
+      return Object.assign({}, state,
+        { requisitionList: action.requisitionList, isRequisitionLoaded: action.isRequisitionLoaded });
+    case "GET_VISIT_DETAILS":
+      return Object.assign({}, state,
+        { selectedVisitId: action.PatientVisitId });
+    case "GET_PATIENT_BASICINFO":
+      return Object.assign({}, state,
+        { requisitionList: action.requisitionList, patientInfo: action.patient });
+    case "REQUISITION_DETAILSTOEXPORT":
+      return Object.assign({}, state,
+        { recordList: action.recordList });
+    default:
+      return state;
+  }
+}

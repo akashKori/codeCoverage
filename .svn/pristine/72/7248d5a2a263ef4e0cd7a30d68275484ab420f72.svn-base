@@ -1,0 +1,63 @@
+import React from 'react';
+import {Tabs, Tab} from 'material-ui/Tabs';
+import {List, ListItem} from 'material-ui/List';
+import LabTestResult from '../../containers/LabTestResult';
+import './RequistionDetail.scss'
+import Requisition from '../../containers/Requisition';
+import Container from '../../containers/Container';
+import Attachment from '../../containers/Attachment';
+
+export default class RequisitionDetail extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 'a',
+    };
+  }
+
+  handleChange = (value) => {
+    this.setState({
+      value: value,
+    });
+  };
+
+  render() {
+    return (
+      
+      <Tabs
+        value={this.state.value}
+         onChange={this.handleChange}>
+        <Tab label="LabResult" value="a" >
+          <div className="result-view">
+            <div className='result-view__scroll'>
+                <LabTestResult/>
+             </div>
+          </div>
+        </Tab>
+        <Tab label="Requisition" value="b">
+          <div className="result-view">
+            <div className='result-view__scroll'>
+           <Requisition/>
+          </div>
+          </div>
+        </Tab>
+        <Tab label="Container" value="c">
+         <div className="result-view">
+            <div className='result-view__scroll'>
+          <Container/>
+          </div>
+          </div>
+        </Tab>
+        <Tab label="Attachment" value="at">
+         <div className="result-view">
+            <div className='result-view__scroll'>
+            <Attachment/>
+          </div>
+          </div>
+        </Tab>
+      </Tabs>
+     
+    );
+  }
+}

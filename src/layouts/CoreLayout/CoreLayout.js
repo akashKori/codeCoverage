@@ -1,0 +1,65 @@
+import React from 'react'
+import Header from '../../components/Header'
+import './CoreLayout.scss'
+import '../../styles/core.scss'
+import { connect } from 'react-redux';
+//import IdleTimer from 'react-idle-timer';
+import { browserHistory } from 'react-router';
+
+export class CoreLayout extends React.Component {
+  //this is a function which will check token is available or not
+  //if not & it is not in login page, redirect to login page
+  tokenCheckFun() {
+    //fetch the token from localStorage
+    let token = localStorage.getItem('jwtToken');
+    //if token in null & page is not login page, redirecting to login page
+    if (token == null) {
+      if (window.location.pathname != '/') {
+        window.location.href = window.location.protocol + "/";
+        //browserHistory.push("/");
+      }
+    }
+  }
+
+  //componentDidMount is executed after first render only on the client side.
+  componentDidMount() {
+    //binding the statement to tokenCheckFun function   
+    this.tokenCheckFun();
+
+    // the event seems not to fire on own state changes, only other windows
+    window.addEventListener("storage", this.tokenCheckFun.bind(this));
+  }
+
+  render() {
+    const header = (this.props.isUserLoggedIn)
+      ? <Header />
+      : <div />
+    return (
+      <div className='container '>
+        {header}
+        <div className='core-layout__viewport'>
+          {this.props.children}
+        </div>
+      </div>
+    );
+  }
+}
+
+//component parameters
+CoreLayout.propTypes = {
+  children: React.PropTypes.element.isRequired,
+  isUserLoggedIn: React.PropTypes.bool.isRequired
+}
+
+//this function takes two parameters state 
+//state is represent state in redux  store
+//ownProps let's to access the parameters attached to this component
+function mapStateToProps(state) {
+  return {
+    isUserLoggedIn: state.login.isUserLoggedIn,// isUserLoggedIn is assigned from state.login.isUserLoggedIn 
+  };
+}
+
+//connect function is used to create component that can interact with redux
+//mapStateToProps parameters is functions
+export default connect(mapStateToProps)(CoreLayout);

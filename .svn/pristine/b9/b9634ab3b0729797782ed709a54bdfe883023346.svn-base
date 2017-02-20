@@ -1,0 +1,16 @@
+import React,{PropTypes} from 'react';
+import './HomeView.scss'
+import Login from '../../Login/containers/loginContainer'
+
+
+export class HomeView extends React.Component{
+  render() {
+  return(
+  <div>
+   {(this.props.isUserLoggedIn)?<div/>: <Login/>}
+  </div>
+  );
+  }
+}
+
+export default HomeView

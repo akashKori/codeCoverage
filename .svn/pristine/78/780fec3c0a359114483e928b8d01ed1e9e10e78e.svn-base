@@ -1,0 +1,85 @@
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { EditLabResult } from '../actions/index';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Checkbox from 'material-ui/Checkbox';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import IconButton from 'material-ui/IconButton';
+import ContentRemoveCircle from 'material-ui/svg-icons/content/remove-circle';
+import ContentAddCircle from 'material-ui/svg-icons/content/add-circle';
+import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import './LabTestResult.scss';
+class LabTestResult extends Component {
+    renderList() {
+        return this.props.labresult.map((test) => {
+            return (
+
+                <div>
+                    <ul className='Result-list'>
+                        <li key={test.testId}>
+                            <div>
+                                <div className='Result-list__title'>
+                                    <Checkbox style={{width:30,float:'left', display:'block' }}/>
+                                    <span className='Result-list__text'> {test.testName}</span>
+                                </div>
+                                <div className='Flt-rt'>
+                                    <IconButton tooltip="Collapse">
+                                        <ContentRemoveCircle />
+                                    </IconButton>
+                                    <IconButton tooltip="Expand">
+                                        <ContentAddCircle />
+                                    </IconButton>
+                                </div>
+                            </div>
+                            <div className='Clearfix'></div>
+                            <div className='Border-all'>
+                                {test.labresultList.map((result) => {
+                                    return (
+                                        <li key={result.labresultId} >
+                                            <div>
+                                                <div>
+                                                    <IconButton tooltip="Edit" key={result.labresultId} onClick={() => this.props.editLabResult(result)}>
+                                                        <EditorModeEdit />
+                                                    </IconButton>
+                                                    <span> {result.loincCodeName} &nbsp;</span>
+
+                                                </div>
+                                                <div>
+                                                    <span> <b>status:</b> {result.status}</span>
+                                                    <span>   {result.value}{result.uom} </span>
+                                                </div>
+                                            </div>
+                                            <div className='Clearfix'> </div>
+                                        </li>
+                                    )
+                                })}
+                            </div>
+                        </li>
+                    </ul >
+                </div>
+
+            );
+        });
+    }
+    render() {
+        return (
+            <div>
+                {this.renderList()}
+            </div>
+
+        );
+    }
+
+}
+// Get apps state and pass it as props to UserList
+// > whenever state changes, the UserList will automatically re-render
+function mapStateToProps(allReducers) {
+    return { labresult: allReducers.labresult };
+}
+
+function matchDispatchToProps(dispatch) {
+    return bindActionCreators({ editLabResult: EditLabResult }, dispatch);
+}
+export default connect(mapStateToProps, matchDispatchToProps)(LabTestResult);
+

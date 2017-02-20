@@ -1,0 +1,150 @@
+/*
+ * The users reducer will always return an array of users no matter what
+ * You need to return something, so if there are no users then just return an empty array
+ * */
+
+export default function () {
+    return [
+        {
+            testId: 1,
+            testName: "80076-Hepatic (Liver) function Panel (PHX)",
+            labresultList:[
+           {
+            labresultId:1,
+            loincCodeName:"Protein,Total",
+            status: "Under Lab Review",
+            value:90.0,
+            uom:"g/dl"
+            },
+            {
+            labresultId:2,
+            loincCodeName:"Albumin",
+            status: "Available",
+            value:100.0,
+            uom:"g/dl"
+            },
+            {
+            labresultId:3,
+            loincCodeName:"Alkalin phosphate",
+            status: "Void By Lab",
+            value:200.0,
+            uom:"g/dl"
+            }
+            
+            ]
+        },
+             {
+            testId: 2,
+            testName: "80076-Hepatic (Liver) function Panel (PHX)",
+            labresultList:[
+           {
+            labresultId:1,
+            loincCodeName:"Protein,Total",
+            status: "Under Lab Review",
+            value:90.0,
+            uom:"g/dl"
+            },
+            {
+            labresultId:2,
+            loincCodeName:"Albumin",
+            status: "Available",
+            value:100.0,
+            uom:"g/dl"
+            },
+            {
+            labresultId:3,
+            loincCodeName:"Alkalin phosphate",
+            status: "Void By Lab",
+            value:200.0,
+            uom:"g/dl"
+            }
+            
+            ]
+        },
+             {
+            testId: 3,
+            testName: "80076-Hepatic (Liver) function Panel (PHX)",
+            labresultList:[
+           {
+            labresultId:1,
+            loincCodeName:"Protein,Total",
+            status: "Under Lab Review",
+            value:90.0,
+            uom:"g/dl"
+            },
+            {
+            labresultId:2,
+            loincCodeName:"Albumin",
+            status: "Available",
+            value:100.0,
+            uom:"g/dl"
+            },
+            {
+            labresultId:3,
+            loincCodeName:"Alkalin phosphate",
+            status: "Void By Lab",
+            value:200.0,
+            uom:"g/dl"
+            }
+            
+            ]
+        },
+             {
+            testId: 4,
+            testName: "80076-Hepatic (Liver) function Panel (PHX)",
+            labresultList:[
+           {
+            labresultId:1,
+            loincCodeName:"Protein,Total",
+            status: "Under Lab Review",
+            value:90.0,
+            uom:"g/dl"
+            },
+            {
+            labresultId:2,
+            loincCodeName:"Albumin",
+            status: "Available",
+            value:100.0,
+            uom:"g/dl"
+            },
+            {
+            labresultId:3,
+            loincCodeName:"Alkalin phosphate",
+            status: "Void By Lab",
+            value:200.0,
+            uom:"g/dl"
+            }
+            
+            ]
+        },
+             {
+            testId:5,
+            testName: "80076-Hepatic (Liver) function Panel (PHX)",
+            labresultList:[
+           {
+            labresultId:1,
+            loincCodeName:"Protein,Total",
+            status: "Under Lab Review",
+            value:90.0,
+            uom:"g/dl"
+            },
+            {
+            labresultId:2,
+            loincCodeName:"Albumin",
+            status: "Available",
+            value:100.0,
+            uom:"g/dl"
+            },
+            {
+            labresultId:3,
+            loincCodeName:"Alkalin phosphate",
+            status: "Void By Lab",
+            value:200.0,
+            uom:"g/dl"
+            }
+            
+            ]
+        }
+      
+    ]
+}

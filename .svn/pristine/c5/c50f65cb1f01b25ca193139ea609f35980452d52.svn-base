@@ -1,0 +1,186 @@
+import React from 'react'
+import Login from '../../../../src/routes/Login/components/Login'
+import chai from 'chai'
+import { mount, shallow } from 'enzyme'
+import sinon from 'sinon'
+import sinonChai from 'sinon-chai'
+chai.use(sinonChai)
+chai.should()
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import * as loginAction from '../../../../src/routes/Login/modules/loginAction'
+import * as requisition from '../../../../src/routes/Requisition/modules/requisition'
+// //shallow rendering with text utils
+function shallowRendering()
+{
+ let output = mount(<Login/>,
+ {
+    context: {
+      muiTheme: getMuiTheme(),
+    },
+    childContextTypes: {
+      muiTheme: React.PropTypes.object.isRequired
+    }
+ });
+
+return { output };
+}
+
+
+
+describe('Testing Login component', () => {
+let output = shallow(<Login/>,
+ {
+    context: {
+      muiTheme: getMuiTheme(),
+    },
+    childContextTypes: {
+      muiTheme: React.PropTypes.object.isRequired
+    }
+ });
+
+/*===================component level testing (Unit test) ====================*/ 
+ it('should return login component as division',()=>
+ { 
+    chai.expect(output.find('div').length).to.be.equals(6);
+ });
+
+//testing first child of your component
+ it('h4 should return text as login',()=>{
+    chai.expect(output.find('h4').text()).to.be.equals('Login');
+ });
+
+
+// describe('testing for form submission', ()=>{
+
+//   it('testing for login submission')
+//     {
+//     const mounting = mount(<Login/>, 
+//     {
+//     context: {
+//       muiTheme: getMuiTheme(),
+//     },
+//     childContextTypes: {
+//       muiTheme: React.PropTypes.object.isRequired
+//     }
+//     })
+    
+//     const saveButton = mounting.find('input').last();
+//     chai.expect(saveButton.type()).to.be.equals('input');
+//     }
+// })
+
+
+/*===================Test for login action  creators ==================*/
+//currently we are not returning anything in login page 
+
+// describe('test for login action creator', ()=>{
+//     describe('first checking for login success', ()=>
+//     {
+//       it('should return true if login is successfull', ()=>{
+//        const user = {username : 'Shuvam@gmail.com' , password : 'Stp@*mnq1', isLoggedIn :false};
+//        const  expectedAction = {
+//                                type : 'CREATE_LOGIN',
+//                                user : user,
+//                                isUserLoggedIn : false 
+//                                 };
+//         const actionReturn = loginAction.createLogin(user);
+//         chai.assert(actionReturn).to.be.equals(expectedAction);
+//        });
+//     });
+// });
+
+// //check for any requistion page if it returning anything 
+// /*===================Test for Requiestion actions creators ==================*/
+
+// describe('test for Requsition action creators', ()=>{
+//     describe('checking if it is returning requistion list', ()=>
+//     {
+//       it('should return list of requisition', ()=>{
+//         const actionReturn = requisition.requestRequisitionSortBy('','',1,10);
+//          chai.assert(actionReturn).to.be.equals(expectedAction);
+         
+//        });
+//     });
+// });
+
+/*==================Mock test using sinon and sinon-chai ================*/
+
+
+////// ---- mock test using spy-----------------/////
+describe('mock test for login page by spy ',()=>{
+it('should call Login once by spy', function() {
+  
+  const user = {username : 'Shuvam@gmail.com' , password : 'Stp@*mnq1', isLoggedIn :false};  
+   
+  var spyLogin ={
+     loginCall : loginAction.createLogin(user)
+  };
+  
+   var sinonObj= sinon.spy(spyLogin,'loginCall');    
+   sinon.assert.calledOnce(spyLogin.loginCall);
+   sinonObj.restore();
+});
+})
+
+////------------- mock test using stub ----------------/////////////
+describe('mock test for login page by stub',()=>{
+it('should call Login once by stub ', function() {
+  
+  const user = {username : 'Shuvam@gmail.com' , password : 'Stp@*mnq1', isLoggedIn :false};  
+   
+  var stubLogin ={
+     loginCall : loginAction.createLogin(user)
+  };
+   stubObj= sinon.stub(stubLogin,'loginCall');  
+   stubObj.should.have.been.calledOnce;
+});
+})
+
+// //------------using mock api ---------------------//////
+// describe('test login function using mock api ', ()=>{
+//   it('should call login only once ', ()=>{
+//         const user = {username : 'Shuvam@gmail.com' , password : 'Stp@*mnq1', isLoggedIn :false}; 
+//         var mockobj = {
+//             mockCall : loginAction.createLogin(user)
+//         } 
+//         var mockApi = sinon.mock(mockobj); 
+//        mockobj.expect(mockobj.mockCall()).alwaysCalledOn
+        
+//   });
+// });
+
+// //--------------------fake server --------------------////
+// describe('testing loging page with fake server', ()=>{
+ 
+//   beforeEach(function () {
+//   var server = sinon.fakeServer.create();
+//   });
+
+//   afterEach(function () {
+//   server.restore();
+//   });
+//   server.xhr.useFilters = true;
+//   server.autoRespond = true;
+//   server.xhr.addFilter(function(method, url) {
+//   // If the filter returns truthy, the request will not be faked
+//   return !url.match(/localhost:3000/);
+//   });
+
+
+//   server.respondWith(/localhost:3000/,
+
+//   function(xhr, id) {
+//     xhr.respond(
+//       200,
+//       {"Content-Type": "application/json"},
+//       //return the JSON string 
+//       JSON.stringify({some:"jsonData"})
+//     );
+//   });
+
+//   it('test function with fake server', ()=>{
+
+//   })
+//  })
+})
+

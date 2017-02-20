@@ -1,0 +1,38 @@
+export default function () {
+    return [
+        {
+            attachmentId: 1,
+            Name:"Payment",
+            Type:"Payment Summary",
+            Description:"Payment received",
+            OpenAttachmnet: "20613-Test Specific ICD Codes_09092016_v2 (2).pdf",
+        },
+        {
+            attachmentId:2,
+            Name:"Insurance details",
+            Type:"Insurance Information",
+            Description:"patient Insurance details description",
+            OpenAttachmnet: "20613-Test Specific ICD Codes_09092016_v2 (2).pdf",
+        },
+       {
+            attachmentId:3,
+
+            Name:"Payment",
+            Type:"Payment Summary",
+            Description:"Payment received",
+            OpenAttachmnet: "20613-Test Specific ICD Codes_09092016_v2 (2).pdf",
+        },
+        {
+            attachmentId:4,
+
+            Name: "20613-Test Specific ICD Codes_09092016_v2 (1).pdf",
+        },
+        {
+            attachmentId:5,
+             Name:"Payment",
+            Type:"Payment Summary",
+            Description:"Payment received",
+            OpenAttachmnet: "20613-Test Specific ICD Codes_09092016_v2 (2).pdf",
+        },
+    ]
+}

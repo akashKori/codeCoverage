@@ -1,0 +1,69 @@
+export default function () {
+    return [
+        {
+            containerId: 1,
+            containerName: "Lavender Tube",
+            collectedDate: "02/02/2016",
+            technician: "Kamal",
+            status: "Received in Lab",
+            receivedDate: "18/02/2016",
+            labReceiver: "Labdirector Theranos",
+            barcode: "1482211002210",
+            location: "newark",
+
+        },
+        {
+            containerId: 2,
+            containerName: "Lavender Tube",
+            collectedDate: "02/03/2016",
+            technician: "Gopal Nandan",
+            status: "Received in Lab",
+            receivedDate: "18/02/2016",
+            labReceiver: "Labdirector Theranos",
+            barcode: "1482211002211",
+            location: "newark",
+
+
+        },
+        {
+            containerId: 3,
+            containerName: "Lavender Tube",
+            collectedDate: "02/08/2016",
+            technician: "Varma jayanth",
+            status: "Received in Lab",
+            receivedDate: "18/02/2016",
+            labReceiver: "Labdirector Theranos",
+            barcode: "1482211002213",
+            location: "newark",
+
+
+        },
+        {
+            containerId: 4,
+            containerName: "Lavender Tube",
+            collectedDate: "02/12/2016",
+            technician: "srinadh",
+            status: "Received in Lab",
+            receivedDate: "18/02/2016",
+            labReceiver: "Labdirector Theranos",
+            barcode: "1482211002214",
+            location: "newark",
+
+
+        },
+        {
+            containerId: 5,
+            containerName: "Lavender Tube",
+            collectedDate: "12/02/2016",
+            technician: "susash",
+            status: "Received in Lab",
+            receivedDate: "18/02/2016",
+            labReceiver: "Labdirector Theranos",
+            barcode: "1482211002215",
+            location: "newark",
+
+
+        }
+
+    ]
+}

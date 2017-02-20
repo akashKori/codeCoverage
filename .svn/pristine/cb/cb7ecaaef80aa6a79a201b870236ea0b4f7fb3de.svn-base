@@ -1,0 +1,144 @@
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { LoadLabResult } from '../modules/labTestResultAction';
+import Checkbox from 'material-ui/Checkbox';
+import IconButton from 'material-ui/IconButton';
+import ActionNoteAdd from 'material-ui/svg-icons/action/note-add';
+import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import CircularProgress from 'material-ui/CircularProgress';
+import { List, ListItem } from 'material-ui/List';
+
+
+import './LabTestResult.scss';
+class LabTestResult extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: true,
+        }
+        this.collapseButton = this.collapseButton.bind(this);
+    }
+    state = {
+        open: false,
+    };
+
+    collapseButton = () => {
+        this.setState({
+            open: this.state.open,
+        });
+
+    }
+
+    handleToggle = () => {
+        this.setState({
+            open: !this.state.open,
+        });
+    };
+
+    handleNestedListToggle = (item) => {
+        this.setState({
+            open: item.state.open,
+        });
+    };
+
+    componentWillMount() {
+        var self = this;
+        setTimeout(() => {
+            self.setState({ loading: false });
+        }, 9999);
+
+        const SelectedUserId = this.props.selectedVisitId;
+        this.props.loadResult(SelectedUserId);
+    }
+  
+    renderList() {
+        if (this.props.labresults && this.props.labresults.length) {
+            return this.props.labresults.map((test,index) => {
+                return (
+                    <div key={index}>
+                        <List key={test.TestId}>
+                            <ListItem  initiallyOpen={true} open={this.state.open} onNestedListToggle={this.handleNestedListToggle} primaryTogglesNestedList={true} primaryText={test.TestName} leftCheckbox={<Checkbox />}
+                                nestedItems={[
+                                    <ListItem open={this.state.open} key={test.LabResultList}>
+                                        <div className='Border-all'>
+                                            {test.LabResultList.map((result,i) => {
+                                                return (
+                                                    <div key={i} >
+                                                        <div style={{ zIndex: 5010 }}>
+                                                            <IconButton tooltip="Edit" style={{ padding: 5, width: 30, height: 30, marginLeft: 10, zIndex: 3005 }}>
+                                                                <EditorModeEdit />
+                                                            </IconButton>
+                                                            <span> {result.ResultName} &nbsp;</span>
+                                                        </div>
+                                                        <div>
+                                                            <IconButton tooltip="Note" style={{ zIndex: 3004 }} >
+                                                                <ActionNoteAdd />
+                                                            </IconButton>
+                                                            <span> <b>Status:</b> {result.Status}</span>
+                                                            <span>   {result.ResultValue}{result.ResultUOM} </span>
+                                                        </div>
+                                                        <div>
+                                                            <Checkbox className='labview__status-change' />
+                                                            <span className='labview__status-text'>Select to Redraw, Rerun, or Change status</span>
+                                                        </div>
+                                                        <div className='Clearfix'> </div>
+                                                    </div>
+                                                )
+                                            })}
+                                        </div>
+                                    </ListItem>
+                                ]}>
+                            </ListItem>
+                        </List>
+
+                    </div>
+
+
+                );
+            });
+        }
+        else {
+            return (
+
+                <div key='busyIndicator' className='busy-indicator'>
+                    <div className='busy-indicator__spinner'>
+                        <CircularProgress size={40} thickness={5} />
+                    </div>
+                </div>
+
+            );
+        }
+
+    }
+    render() {
+        return (
+            <div>
+                <div className='clearfix' />
+                {this.renderList()}
+            </div>
+
+        );
+    }
+
+}
+// Get apps state and pass it as props to UserList
+// > whenever state changes, the UserList will automatically re-render
+function mapStateToProps(store) {
+    return {
+        labresults: store.reqDetail.labresult.labresult,
+        selectedVisitId:store.requisition.selectedVisitId
+
+    };
+}
+
+const matchDispatchToProps = (dispatch) => ({
+    loadResult: (selectedUserId) => dispatch(LoadLabResult(selectedUserId))
+
+});
+
+LabTestResult.propTypes = {
+    selectedVisitId: React.PropTypes.string.isRequired
+}
+export default connect(mapStateToProps, matchDispatchToProps)(LabTestResult);
+

@@ -1,0 +1,69 @@
+import { browserHistory } from 'react-router'
+const port = 6068
+
+// ------------------------------------
+// Constants
+// ------------------------------------
+export const SEARCH_REQUISITION = 'SEARCH_REQUISITION'
+export const GET_REQUISITION = 'GET_REQUISITION'
+export const GET_VISIT_DETAILS = 'GET_VISIT_DETAILS'
+// ------------------------------------
+// Actions
+// ------------------------------------
+
+/*  This is a thunk, meaning it is a function that immediately
+    returns a function for lazy evaluation. It is incredibly useful for
+    creating async actions, especially when combined with redux-thunk! */
+
+export function getVisitDetails(visiId=0) {
+return (dispatch) => {
+    dispatch({
+      type: GET_VISIT_DETAILS,
+      visiId
+    });    
+    browserHistory.push('/requisition')
+  }
+}
+
+export function searchRequisition() {
+return (dispatch) => {
+    dispatch({
+      type: SEARCH_REQUISITION,
+    });
+
+    fetch('http://localhost:'+port+'/api/requisition/GetVisitList')
+    .then((response) => response.json())
+    .then((requisitionList) => dispatch(getRequisition(requisitionList)));
+  }
+}
+
+export function getRequisition(requisitionList) {
+  return {
+    type: GET_REQUISITION,
+    requisitionList,
+    isUserLoggedIn:true
+  };
+}
+// ------------------------------------
+// Reducer
+// ------------------------------------
+const initialState = {requisitionList:[], selectedVisitId:0, isRequisitionLoaded:false,isUserLoggedIn:false}
+export default function searchRequisitionReducer (state = initialState, action) {
+ switch(action.type)
+ {
+   case "GET_REQUISITION":
+   return Object.assign({},state,
+   {requisitionList : action.requisitionList, isRequisitionLoaded:true, isUserLoggedIn:true});
+
+ case "SEARCH_REQUISITION":   
+   return Object.assign({},state,
+   {requisitionList : action.requisitionList,isRequisitionLoaded : action.isRequisitionLoaded,isUserLoggedIn:true});
+
+case "GET_VISIT_DETAILS":   
+   return Object.assign({},state,
+   {selectedVisitId : action.visiId});
+
+   default:
+   return state;
+ }
+}

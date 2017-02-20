@@ -1,0 +1,19 @@
+
+.Result-list {
+    margin: 5px;
+    padding: 0;
+    list-style: none;
+
+  li { display: block; padding:3px; }
+ 
+}
+.Result-list__title{ 
+  float:left; 
+  font-size:16px;
+  margin-top: 14px;
+}
+
+.Border-all{border:1px solid gray; padding:5px;}
+
+
+

@@ -1,0 +1,43 @@
+
+@import '../../../styles/_mixin';
+
+// ----------------------------------------------------------------------
+
+  //  Login Page styles 
+
+// ----------------------------------------------------------------------
+
+
+//login block
+.login {
+     @include size( 100%,100%,0,0);
+     @include display-flex ;
+    align-items: center;
+    justify-content: center;
+}
+// login  paper
+.login-paper{
+    @include size( 500px,380px,25px,0);
+    display: inline-block;
+} 
+
+// login heading
+.login__heading{
+    @include textalign(30px,30px,center);
+        font-weight: normal;
+        margin: 15px 0 0 0;
+}
+
+//login content
+.login__content
+{
+    height:80px;
+    padding:0 0 5px 0;
+}
+
+// login button
+.login__btn{
+    padding:30px 0px;
+}
+
+

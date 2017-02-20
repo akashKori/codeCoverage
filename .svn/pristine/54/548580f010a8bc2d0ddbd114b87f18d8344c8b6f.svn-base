@@ -1,0 +1,76 @@
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+
+class Requisition extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            fixedHeader: true,
+            fixedFooter: true,
+            stripedRows: false,
+            showRowHover: false,
+            selectable: true,
+            multiSelectable: false,
+            enableSelectAll: false,
+            deselectOnClickaway: true,
+            showCheckboxes: false,
+           
+        };
+    }
+    renderList() {
+        return this.props.requisition.map((req) => {
+            return (
+                <div>
+                    <h5>LIS Accession Number :10028 </h5>
+                    <h5>Lab Order ID :10028 </h5>
+                    <div> {req.testName}</div>
+                    <Table fixedHeader='true' >
+                        <TableHeader displaySelectAll={this.state.showCheckboxes}
+                            adjustForCheckbox={this.state.showCheckboxes}
+                            enableSelectAll={this.state.enableSelectAll}>
+                            <TableRow>
+                                <TableHeaderColumn>Clinician</TableHeaderColumn>
+                                <TableHeaderColumn>Dates</TableHeaderColumn>
+                                <TableHeaderColumn>Order Source</TableHeaderColumn>
+                                <TableHeaderColumn>Test</TableHeaderColumn>
+                                <TableHeaderColumn>Transcriptionist</TableHeaderColumn>
+                            </TableRow> 
+                        </TableHeader>
+                        <TableBody displayRowCheckbox={this.state.showCheckboxes}>
+                            <TableRow>
+                                <TableRowColumn > <p>{req.clinicianName} </p>
+                                                   <p>NPI:{req.NPI},<br/>Theranos,</p>
+                                                   <p> Ph:{req.PhNumber}</p>
+                                                </TableRowColumn>
+                                <TableRowColumn>Order Effective: {req.OrderEffectiveDate}</TableRowColumn>
+                                <TableRowColumn>LIS</TableRowColumn>
+                                <TableRowColumn>80076-Hepataic(liver) Function Panel</TableRowColumn>
+                                <TableRowColumn>Labdirector Theranos</TableRowColumn>
+                            </TableRow>
+
+                        </TableBody>
+                    </Table>
+                </div>
+            );
+        });
+    }
+    render() {
+        return (
+            <div style={{padding:15}}>
+                {this.renderList()}
+            </div>
+        );
+    }
+
+}
+// Get apps state and pass it as props to UserList
+// > whenever state changes, the UserList will automatically re-render
+function mapStateToProps(allReducers) {
+    return { requisition: allReducers.req.requisition };
+}
+
+
+export default connect(mapStateToProps)(Requisition);

@@ -1,0 +1,8 @@
+Script started on Tue Dec 27 17:30:16 2016
+sh-4.1$ .script[K[K[K[K[K[K[Kscript
+Script started, file is typescript
+sh-4.1$ .script
+sh: .script: command not found
+sh-4.1$ Script done, file is typescript
+sh-4.1$ 
+Script done on Tue Dec 27 17:30:43 2016

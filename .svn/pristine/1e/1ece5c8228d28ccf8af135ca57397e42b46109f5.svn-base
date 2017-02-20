@@ -1,0 +1,38 @@
+
+$text-color:red;
+
+.basic-info{width: 17%; float: left; height: 87.2vh;}
+.requisition-details{ float: left; width: 70%; height:90vh;}
+.requisition-notes{ width: 13%; float: left; height: 90vh; }
+
+.result-view{
+    border: 1px solid gray;
+    height:85vh;
+   display: flex;
+  flex-flow: column;
+}
+.result-view__scroll{
+    height:100%;
+    display: flex;
+    flex-direction: column;
+    background: white;
+    overflow-y: scroll; /* or overflow-y: auto */
+}
+h4,h5{ margin:5px 0;}
+.labresult-topmenu {
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    
+  }
+
+  li { display: inline-block; border: 1px solid #ddd;text-align: center; padding: 4px 10px; }
+   p{margin:3px; }
+  a {
+    display: block;
+    padding: 6px 12px;
+    text-decoration: none;
+  }
+}
+.text-basicInfo{margin:2px 0};

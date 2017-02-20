@@ -1,0 +1,15 @@
+import LoginRoute from 'routes/Login'
+import chai from 'chai'
+
+describe('testing componenet by route configuration object', () => {
+  let _component
+
+  beforeEach(() => {
+    _component = LoginRoute;
+  })
+
+  it('Should return a route configuration object', () => {
+   chai.expect(typeof(LoginRoute).to.equal('object')
+  })
+  
+})

@@ -1,0 +1,79 @@
+//this file contains action related for user login
+
+export const CREATE_LOGIN = 'CREATE_LOGIN'
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS'
+export const CREATE_LOGOUT = 'CREATE_LOGOUT'
+import { APIPATH } from '../../../constant/common'
+import { browserHistory } from 'react-router';
+
+// ------------------------------------
+// Create Actions
+// ------------------------------------
+//createLogin is the function  which accepts the user data  
+export function createLogin(user) {
+
+  return (dispatch) => {
+    //dispatch the action 
+    //dispatch the plain object that must have type property 
+    //for CREATE_LOGIN action passing user data
+    dispatch({
+      type: CREATE_LOGIN,//defining the name of the action to identify in the reducer
+      user: user,
+      isUserLoggedIn: false
+    });
+
+    //fetching userName and password from user
+    var userInfo = "userId=" + user.userName + "&password=" + user.password;
+    fetch(APIPATH + 'Account/Login?' + userInfo, {
+      method: "GET",
+      dataType: 'application/json',
+    }).then((response) => response.json())
+      .then((responseJson) => {
+        if (responseJson.Token != null && typeof responseJson.Token != 'undefined') {
+          //sessionStorage.setItem('jwtToken', responseJson.Token);
+          localStorage.setItem('jwtToken', responseJson.Token);
+          user.isLogedin = true;
+          
+          //dispatching the loginSuccess method
+          dispatch(loginSuccess(user))
+        }
+      })
+      .catch(function (ex) {
+        console.log('parsing failed', ex)
+      })
+  }
+}
+
+//this method use to pass the data coming for the lab test result to the component
+export function loginSuccess(user) {
+
+  //redirecting to requisitionList
+  browserHistory.push("/requisitionList");
+
+  //returning the action 
+  //returning the plain object that must have type property 
+  //for LOGIN_SUCCESS action passing user data and isUserLoggedIn
+  return {
+    type: LOGIN_SUCCESS,//defining the name of the action to identify in the reducer
+    user: user, // passing user object
+    isUserLoggedIn: user.isLogedin // setting and  passing isUserLoggedIn as user loged in
+  };
+}
+
+// ------------------------------------
+// Create Actions
+// ------------------------------------
+//createLogin is the function  which accepts the user data  
+export function createLogout(isUserLoggedIn) {
+  //sessionStorage.removeItem('jwtToken');
+  localStorage.removeItem('jwtToken');
+  //redirecting to login page
+  window.location.href = window.location.protocol + "/";
+  
+  //returning the action 
+  //returning the plain object that must have type property 
+  return {
+    type: CREATE_LOGOUT,
+    isUserLoggedIn: isUserLoggedIn
+  };
+}

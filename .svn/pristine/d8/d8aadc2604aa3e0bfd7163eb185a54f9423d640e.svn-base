@@ -1,0 +1,25 @@
+import React from 'react'
+const PatientInfo = ({ FirstName,LastName}) => {
+    
+        return (
+            <div>
+            <div className='border-line' />
+            <p className='text-basicInfo'>{FirstName} ,{LastName}</p>
+            <p className='text-basicInfo'><span>M</span>,<span>08/08/1986</span>,<span>28 y</span> </p>
+            <p className='text-basicInfo'>(900)-089-8065(M)</p>
+            <p className='text-basicInfo'>(900)-089-8065(M)</p>
+            <p className='text-basicInfo'>trinadh@gmail.com</p>
+            <p className='text-basicInfo'>Marathahalli,</p>
+            <p className='text-basicInfo'>Dolylestown,<span>PA-18903</span></p>
+            <div className='border-line' /> 
+            </div>           
+         );
+    }
+
+PatientInfo.propTypes = {
+  FirstName: React.PropTypes.string,
+  LastName : React.PropTypes.string
+};
+
+
+export default PatientInfo

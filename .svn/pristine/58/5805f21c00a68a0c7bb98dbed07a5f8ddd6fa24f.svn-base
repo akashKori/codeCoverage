@@ -1,0 +1,162 @@
+import React from 'react';
+import { TableRowProps, Table, TableBody, TableFooter, PagiFooter, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import UltimatePagination from './UltimatePagination'
+import SelectField from 'material-ui/SelectField';
+import MenuItem from 'material-ui/MenuItem';
+import AttachementIcon from '../../assets/attachments.png';
+import CriticalIcon from '../../assets/critical.png';
+import NotesIcon from '../../assets/notes.png';
+import LabReviewIcon from '../../assets/lab-review.png';
+import NotificationIcon from '../../assets/notifications.png';
+import TestPreviewIcon from '../../assets/test-preview.png';
+import TestPreviewActiveIcon from '../../assets/test-preview-active.png';
+import './Requisition.scss'
+
+
+const styles = {
+  label: {
+    display: 'block'
+  },
+  input: {
+    width: 100
+  },
+  propContainer: {
+    width: 200,
+    overflow: 'hidden',
+    margin: '20px auto 0',
+  },
+  propToggleHeader: {
+    margin: '20px auto 10px',
+  },
+};
+
+class Requisition extends React.Component {
+  constructor() {
+    super();
+
+
+    this.onTotalPagesChange = this.onTotalPagesChange.bind(this);
+    this.onCurrentPageChange = this.onCurrentPageChange.bind(this);
+    this.onPageChangeFromPagination = this.onPageChangeFromPagination.bind(this);
+
+    this.state = {
+
+      value: null,
+      currentPage: 1,
+      totalPages: 10
+    };
+  }
+
+  handleChange = (event, index, value) => this.setState({ value });
+
+
+  onTotalPagesChange(event) {
+    this.setState({ totalPages: +event.target.value });
+  }
+
+  onCurrentPageChange(event) {
+    this.setState({ currentPage: +event.target.value });
+  }
+
+  onPageChangeFromPagination(newPage) {
+    this.setState({ currentPage: newPage });
+  }
+
+  render() {
+    const {requisitionList, getVisitDetails} = this.props;
+    return (
+
+      <div className='full-height'>
+        <h4 className='accesion-heading'>Accession</h4>
+        <div className='accession-view'>
+          <Table selectable={false}>
+            <TableHeader
+              displaySelectAll={false}
+              adjustForCheckbox={false}
+              enableSelectAll={false}
+              >
+              <TableRow>
+                <TableHeaderColumn  className='accession-view__Id-column'>Accession #</TableHeaderColumn>
+                <TableHeaderColumn >Visit Date</TableHeaderColumn>
+                <TableHeaderColumn >Visit Time</TableHeaderColumn>
+                <TableHeaderColumn >PSC Location</TableHeaderColumn>
+                <TableHeaderColumn >Patient Name</TableHeaderColumn>
+                <TableHeaderColumn className='accession-view__Gender-column'>Sex</TableHeaderColumn>
+                <TableHeaderColumn >DOB</TableHeaderColumn>
+                <TableHeaderColumn >Physician</TableHeaderColumn>
+                <TableHeaderColumn >Physician Location</TableHeaderColumn>
+                <TableHeaderColumn >Status</TableHeaderColumn>
+                <TableHeaderColumn className='accession-view__Icon-column'><img src={NotesIcon} /></TableHeaderColumn>
+                <TableHeaderColumn className='accession-view__Icon-column'><img src={AttachementIcon} /></TableHeaderColumn>
+                <TableHeaderColumn className='accession-view__Icon-column'><img src={NotificationIcon} /></TableHeaderColumn>
+                <TableHeaderColumn className='accession-view__Icon-column'><img src={CriticalIcon} /></TableHeaderColumn>
+                <TableHeaderColumn className='accession-view__Icon-column'><img src={LabReviewIcon} /></TableHeaderColumn>
+                <TableHeaderColumn className='accession-view__preview-column'></TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody
+              displayRowCheckbox={false}
+              deselectOnClickaway={this.state.deselectOnClickaway}
+              showRowHover={this.state.showRowHover}
+              stripedRows={this.state.stripedRows}
+              >
+              {requisitionList.map((row, index) => (
+                <TableRow onDoubleClick={getVisitDetails} key={index} selected={row.selected}>
+                  <TableRowColumn className='accession-view__Id-column'>{row.VisitSequenceId}</TableRowColumn>
+                  <TableRowColumn>{new Date(row.VisitDate).toLocaleDateString("en-US")}</TableRowColumn>
+                  <TableRowColumn>{row.VisitTime}</TableRowColumn>
+                  <TableRowColumn>{row.PSCLocation}</TableRowColumn>
+                  <TableRowColumn>{row.PatientName}</TableRowColumn>
+                  <TableRowColumn className='accession-view__Gender-column'>{row.PatientSex}</TableRowColumn>
+                  <TableRowColumn>{new Date(row.PatientDOB).toLocaleDateString("en-US")}</TableRowColumn>
+                  <TableRowColumn>{row.PhysicianName}</TableRowColumn>
+                  <TableRowColumn>{row.PhysicianLocation}</TableRowColumn>
+                  <TableRowColumn>{row.VisitStatus}</TableRowColumn>
+                  <TableRowColumn className='accession-view__Icon-column'></TableRowColumn>
+                  <TableRowColumn className='accession-view__Icon-column'></TableRowColumn>
+                  <TableRowColumn className='accession-view__Icon-column'></TableRowColumn>
+                  <TableRowColumn className='accession-view__Icon-column'></TableRowColumn>
+                  <TableRowColumn className='accession-view__Icon-column'></TableRowColumn>
+                  <TableRowColumn className='accession-view__preview-column'><img src={TestPreviewIcon} /></TableRowColumn>
+                </TableRow>
+              ))}
+            </TableBody>
+
+          </Table>
+        </div>
+        <div className='labtest-view'>
+          <p className='labtest-view__headerText'>Lab Test</p>
+        </div>
+
+      </div>
+    );
+  }
+}
+
+Requisition.propTypes = {
+  requisitionList: React.PropTypes.arrayOf(
+    React.PropTypes.shape({
+      VisitSequenceId: React.PropTypes.number.isRequired,
+      PatientName: React.PropTypes.string.isRequired,
+      PhysicianName: React.PropTypes.string.isRequired,
+      PSCLocation: React.PropTypes.string.isRequired,
+      PatientSex: React.PropTypes.string.isRequired,
+      PhysicianLocation: React.PropTypes.string.isRequired,
+      VisitDate: React.PropTypes.string.isRequired,
+      VisitTime: React.PropTypes.string.isRequired,
+      PatientDOB: React.PropTypes.string.isRequired,
+      VisitStatus: React.PropTypes.string.isRequired
+    }).isRequired
+  ).isRequired,
+  getVisitDetails: React.PropTypes.func.isRequired
+};
+
+
+
+// Counter.propTypes = {
+//   counter     : React.PropTypes.number.isRequired,
+//   doubleAsync : React.PropTypes.func.isRequired,
+//   increment   : React.PropTypes.func.isRequired
+// }
+
+export default Requisition

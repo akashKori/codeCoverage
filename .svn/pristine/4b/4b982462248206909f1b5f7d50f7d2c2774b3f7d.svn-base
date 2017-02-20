@@ -1,0 +1,131 @@
+import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import {LoadLabResult} from '../modules/labTestResultAction';
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import Checkbox from 'material-ui/Checkbox';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import IconButton from 'material-ui/IconButton';
+import ContentRemoveCircle from 'material-ui/svg-icons/content/remove-circle';
+import ContentAddCircle from 'material-ui/svg-icons/content/add-circle';
+import ContentContentPaste from 'material-ui/svg-icons/content/content-paste';
+import EditorModeEdit from 'material-ui/svg-icons/editor/mode-edit';
+import CircularProgress from 'material-ui/CircularProgress';
+import { List, ListItem } from 'material-ui/List';
+
+
+import './LabTestResult.scss';
+class LabTestResult extends Component {
+   constructor(props) {
+        super(props);
+        this.state = {
+   loading: true,}
+}
+  state = {
+        open: false,
+    };
+
+    handleToggle = () => {
+        this.setState({
+            open: !this.state.open,
+        });
+    };
+
+    handleNestedListToggle = (item) => {
+        this.setState({
+            open: item.state.open,
+        });
+    };
+    componentWillMount() {
+           var self = this;
+        setTimeout(() => {
+            self.setState({loading: false}); }, 9999);
+ 
+     const SelectedUserId=this.props.selectedVisitId;
+     this.props.loadResult(SelectedUserId);
+      }
+    renderList() {
+       if(this.props.labresults.length){
+            if (this.state.loading) {
+                  <div>
+                        <CircularProgress size={40} thickness={5} />
+                    </div>
+            }
+        return this.props.labresults.map((test) => {
+            return (
+       
+                    <div>
+                      <List>
+                        <ListItem initiallyOpen={true} primaryTogglesNestedList={true} key={test.TestId} primaryText={test.TestName}  leftCheckbox={<Checkbox />}
+                            nestedItems={[
+                                <ListItem>
+                                    <div className='Border-all'>
+                                     {test.LabResultList.map((result) => {
+                                            return (
+                                                <div key={result.LabResultId} >
+                                                    <div>
+                                                        <IconButton tooltip="Edit">
+                                                            <EditorModeEdit />
+                                                        </IconButton>
+                                                        <span> {result.ResultName} &nbsp;</span>
+                                                    </div>
+                                                    <div>
+                                                        <IconButton tooltip="Edit" >
+                                                            <ContentContentPaste />
+                                                        </IconButton>
+                                                        <span> <b>status:</b> {result.Status}</span>
+                                                        <span>   {result.ResultValue}{result.ResultUOM} </span>
+                                                    </div>
+                                                    <div>
+                                                        <Checkbox style={{ width: 30, float: 'left', display: 'block', marginLeft: 12, marginTop: -5 }} />
+                                                        <span style={{ backgroundColor: '#efefef' }}>Select to Redraw, Rerun, or Change status</span>
+                                                    </div>
+                                                    <div className='Clearfix'> </div>
+                                                </div>
+                                            )
+                                        })}
+                                   </div>
+                                </ListItem>
+                            ]}>                           
+                        </ListItem>
+                    </List>
+                </div>
+                                 
+                              
+            );
+       });
+    }
+    else{
+            return (<div> <CircularProgress /></div>);
+        }
+    
+    }
+    render() {
+        return (
+            <div>
+                {this.renderList()}
+            </div>
+
+        );
+    }
+
+}
+// Get apps state and pass it as props to UserList
+// > whenever state changes, the UserList will automatically re-render
+function mapStateToProps(allReducers) {
+    return { labresults: allReducers.reqDetail.labresult.labresult ,
+        selectedVisitId:allReducers.requisition.selectedVisitId
+        
+    };
+}
+
+const matchDispatchToProps = (dispatch) => ({
+  loadResult: (selectedUserId) => dispatch(LoadLabResult(selectedUserId))
+
+});
+
+LabTestResult.propTypes = {
+labresults:React.PropTypes.array
+}
+export default connect(mapStateToProps, matchDispatchToProps)(LabTestResult);
+

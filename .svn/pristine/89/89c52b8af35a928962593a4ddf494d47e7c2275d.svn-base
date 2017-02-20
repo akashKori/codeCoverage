@@ -1,0 +1,66 @@
+// ----------------------------------------------------------------------
+
+  //  colors names  
+
+// ----------------------------------------------------------------------
+
+////
+/// 
+/// @group colors
+////
+
+/// Clolor red
+///@type color
+$color-red: #FF0000;
+
+/// Clolor red
+///@type color
+$color-white: #FFFFFF;
+
+/// Clolor red
+///@type color
+
+
+$color-gray: #808080;
+
+/// Clolor red
+///@type color
+
+$color-pink: #FFCBDB;
+
+/// Clolor red
+///@type color
+$color-brown: #964B00;
+
+/// Clolor red
+///@type color
+$color-orange: #FF7F00;
+
+/// Clolor red
+///@type color
+$yellow: #FFFF00;
+
+/// Clolor red
+///@type color
+$color-green: #00FF00;
+
+/// Clolor red
+///@type cyan
+$color-cyan: #00FFFF;
+
+/// Clolor red
+///@type blue
+$color-blue: #22b8dc;
+
+/// Clolor red
+///@type black
+$color-black: #000000;
+
+/// Clolor red
+///@type gray
+$color-ash-gray: #B2BEB5;
+
+/// Main color
+/// @type Color
+$color-main: $color-blue;
+

@@ -1,0 +1,37 @@
+/*
+Application Settings Go Here
+------------------------------------
+This file acts as a bundler for all variables/mixins/themes, so they
+can easily be swapped out without `core.scss` ever having to know.
+
+For example:
+
+@import './variables/colors';
+@import './variables/components';
+@import './themes/default';
+*/
+@import './variables/colors';
+@import './buttons';
+@import './mixin';
+
+/// font family which we are using in this project.
+///@type font
+$base-font-stack:   Roboto,sans-serif;
+
+
+/// font family which we are using in this project.
+///@type font
+$base-font-size:14px;
+
+///variable for float of divs
+///@type position
+$float-right:right;
+
+///variable for float of divs
+///@type position
+$float-left:left;
+
+///variable for full height of divs
+///@type number
+$height100:100%;
+

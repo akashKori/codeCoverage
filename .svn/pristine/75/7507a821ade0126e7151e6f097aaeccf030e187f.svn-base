@@ -1,0 +1,51 @@
+export default function () {
+    return [
+        {
+            testId: 1,
+            testName: "80076-Hepatic (Liver) function Panel (PHX)",
+            clinicianName: "sanjay kumar",
+            NPI:20153878969,
+            PhNumber:9748789478,
+            OrderEffectiveDate:"29/12/2016"
+           
+        },
+             {
+            testId: 2,
+            testName: "80076-Hepatic (Liver) function Panel (PHX)",
+            clinicianName: "gopal kumar",
+             NPI:20153878969,
+             PhNumber:9874852963,
+             OrderEffectiveDate:"30/12/2016"
+
+           
+        },
+             {
+            testId: 3,
+            testName: "80076-Hepatic (Liver) function Panel (PHX)",
+            clinicianName: "Nanadan Varma",
+             NPI:20153878969,
+             PhNumber:9789654789,
+             OrderEffectiveDate:"29/12/2016"
+            
+        },
+             {
+            testId: 4,
+            testName: "80076-Hepatic (Liver) function Panel (PHX)",
+            clinicianName: "Krisha monohar",
+             NPI:20153878969,
+             PhNumber:9785684785,
+             OrderEffectiveDate:"30/12/2016"
+        
+        },
+             {
+            testId: 5,
+            testName: "80076-Hepatic (Liver) function Panel (PHX)",
+            clinicianName: "sanjay kumar",
+             NPI:20153878969,
+             PhNumber:9875689786,
+             OrderEffectiveDate:"29/12/2016"
+        
+        }
+      
+    ]
+}

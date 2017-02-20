@@ -1,0 +1,7 @@
+export const EditLabResult = (labresult) => {
+   alert("Lab Result Edit..")
+    return {
+        type: 'EDIT_LABRESULT',
+        payload: labresult
+    }
+};

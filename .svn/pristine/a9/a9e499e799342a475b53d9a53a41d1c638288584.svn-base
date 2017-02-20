@@ -1,0 +1,21 @@
+import React from 'react'
+import { IndexLink, Link } from 'react-router'
+import './Header.scss'
+
+export const Header = () => (
+  <div className='Header'>
+   
+    <IndexLink to='/' activeClassName='route--active' className="route--link">
+      Home
+    </IndexLink>
+   <Link to='/counter' activeClassName='route--active' className="route--link">
+     counter
+    </Link>
+    <Link to='/requisition' activeClassName='route--active' className="route--link">
+      Requisition Detail
+    </Link>
+    
+  </div>
+)
+
+export default Header

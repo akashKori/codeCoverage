@@ -1,0 +1,178 @@
+import React from 'react';
+import { Tabs, Tab } from 'material-ui/Tabs';
+import { List, ListItem } from 'material-ui/List';
+import LabTestResult from '../../containers/LabTestResult';
+import './RequistionDetail.scss'
+import Requisition from '../../containers/Requisition';
+import Container from '../../containers/Container';
+import Attachment from '../../containers/Attachment';
+import PreviwImage from '../../assets/preview.png';
+import SendEmailImage from '../../assets/send.png';
+import ExportImage from '../../assets/export.png';
+import RedrawImage from '../../assets/redraw.png';
+import AddonImage from '../../assets/add-on.png';
+import RerunImage from '../../assets/rerun.png';
+import MoreActionImage from '../../assets/more-action.png';
+import VoidResultImage from '../../assets/void-results.png';
+import ReviewResultImage from '../../assets/review-results.png';
+import ApproveResultImage from '../../assets/approve-results.png';
+export default class RequisitionDetail extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 'a',
+    };
+  }
+
+  handleChange = (value) => {
+    this.setState({
+      value: value,
+    });
+  };
+
+  render() {
+    return (
+      <div className='full-heght'>
+        <div style={{ width: '17%', float: 'left', height: '100%' }}>
+          <h4> Basic Information</h4>
+          <div className='Border-all' style={{ height: '100%', marginRight: 10 }}>
+            <b >Patient</b>
+            <div className='border-line' />
+            <p className='text-basicInfo'>Trinadh rao</p>
+            <p className='text-basicInfo'><span>M</span>,<span>08/08/1986</span>,<span>28 y</span> </p>
+            <p className='text-basicInfo'>(900)-089-8065(M)</p>
+            <p className='text-basicInfo'>(900)-089-8065(M)</p>
+            <p className='text-basicInfo'>trinadh@gmail.com</p>
+            <p className='text-basicInfo'>Marathahalli,</p>
+            <p className='text-basicInfo'>Dolylestown,<span>PA-18902</span></p>
+            <div className='border-line' />
+            <b >Lab Order</b>
+            <p className='text-basicInfo'>ORDER</p>
+            <p className='text-basicInfo'>New Order,<span>LIS</span></p>
+            <p className='text-basicInfo'>Dr.Sanjay Kumar</p>
+            <p className='text-basicInfo'>Palo Alto</p>
+            <p className='text-basicInfo'>Final Report Sent:<span></span></p>
+            <p className='text-basicInfo'>TrunAround Time:<span></span></p>
+            <p className='text-basicInfo'>Report Status:<span>No Report Sent</span></p>
+            <div className='border-line' />
+            <b >Visit</b>
+            <p className='text-basicInfo'>ORDER</p>
+            <p className='text-basicInfo'><b>Status</b><span>Results partially Uploaded</span></p>
+            <p className='text-basicInfo'>Theranos</p>
+            <p className='text-basicInfo'>Palo Alto</p>
+            <p className='text-basicInfo'>3200 Hillview Ave<span></span></p>
+            <p className='text-basicInfo'>HQ lab:<span>Newwark</span></p>
+            <p className='text-basicInfo'>Report Status:<span>No Report Sent</span></p>
+            <p className='text-basicInfo'>Fasting: <span>Yes</span></p>
+            <div className='border-line' />
+          </div>
+        </div>
+        <div style={{ float: 'left', width: '70%' }}>
+          <div>
+            <Tabs
+              value={this.state.value}
+              onChange={this.handleChange}>
+              <Tab label="Lab Result" value="a" >
+                <div className='result-view'>
+                  <div className='result-view__scroll'>
+                    <div className='labresult-topmenu'>
+                      <ul style={{ float: 'left' }}>
+                        <li>
+                          <img src={PreviwImage} width='45' height='40' />
+                          <p>Preview</p>
+                        </li>
+                        <li>
+                          <img src={SendEmailImage} width='45' height='40' />
+                          <p>send</p>
+                        </li>
+                        <li>
+                          <img src={RedrawImage} width='45' height='40' />
+                          <p>Redraw</p>
+                        </li>
+                        <li>
+                          <img src={RerunImage} width='45' height='40' />
+                          <p>Rerun</p>
+                        </li>
+                        <li>
+                          <img src={ExportImage} width='45' height='40' />
+                          <p>Export</p>
+                        </li>
+                        <li>
+                          <img src={AddonImage} width='45' height='40' />
+                          <p>Add-on</p>
+                        </li>
+                      </ul>
+
+                      <ul style={{ float: 'right' }}>
+                        <li>
+                          <img src={MoreActionImage} width='45' height='40' />
+                          <p>More Actions</p>
+                        </li>
+                        <li>
+
+                          <img src={VoidResultImage} width='45' height='40' />
+
+                          <p>Void Results</p>
+                        </li>
+                        <li>
+                          <img src={ReviewResultImage} width='45' height='40' />
+                          <p>Review Results</p>
+                        </li>
+                        <li>
+                          <img src={ApproveResultImage} width='45' height='40' />
+                          <p>Approved Results</p>
+                        </li>
+
+                      </ul>
+
+
+                    </div>
+                    <div className="border-line" style={{ margin: 0, width: '100%' }}></div>
+                    <LabTestResult />
+                  </div>
+                </div>
+              </Tab>
+              <Tab label="Requisition" value="b">
+                <div className='result-view'>
+                  <div className='result-view__scroll'>
+                    <Requisition />
+                  </div>
+                </div>
+              </Tab>
+              <Tab label="Container" value="c">
+                <div className='result-view'>
+                  <div className='result-view__scroll'>
+                    <h4 style={{ paddingLeft: 15, marginBottom: 0, }}>PSC Collection Container</h4>
+                    <Container />
+                  </div>
+                </div>
+              </Tab>
+              <Tab label="Attachment" value="at">
+                <div className='result-view'>
+                  <div class='result-view__scroll'>
+                    <Attachment />
+                  </div>
+                </div>
+              </Tab>
+            </Tabs>
+          </div>
+        </div>
+        <div style={{ width: '13%', float: 'left', height: '90vh' }}>
+          <div className='Border-all' style={{ height: '100%', marginLeft: 10 }}>
+            <b >Notes</b>
+            <div className='border-line' />
+            <p className='text-basicInfo'>Trinadh rao</p>
+            <p className='text-basicInfo'><span>M</span>,<span>08/08/1986</span>,<span>28 y</span> </p>
+            <p className='text-basicInfo'>(900)-089-8065(M)</p>
+            <p className='text-basicInfo'>(900)-089-8065(M)</p>
+            <p className='text-basicInfo'>trinadh@gmail.com</p>
+            <p className='text-basicInfo'>Marathahalli,</p>
+            <p className='text-basicInfo'>Dolylestown,<span>PA-18902</span></p>
+            <div className='border-line' />
+          </div>
+        </div>
+      </div>
+    );
+  }
+}

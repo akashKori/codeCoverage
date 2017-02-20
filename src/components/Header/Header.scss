@@ -1,0 +1,27 @@
+@import './../../styles/_base';
+///header styles goes here
+$header-height:45px;
+$header-background:$color-black;
+$float-right:right;
+//header username and declartaion of header
+.header{
+  padding:0 15px ;
+  height:$header-height;
+  line-height: $header-height;
+  background: $header-background;
+    &__user-name{
+    float: $float-right;
+    color:$color-white;
+    margin: 0 5px;
+  }
+  //route link declaration and active styles
+    &_route--link {
+    padding:10px 5px;
+    text-decoration: none;
+    color:$color-light-gray;
+    &:active {
+      color:$color-white;
+    }
+  }
+}
+.flt-rt{float:$float-right;}

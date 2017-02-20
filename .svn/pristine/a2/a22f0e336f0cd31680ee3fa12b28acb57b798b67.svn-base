@@ -1,0 +1,61 @@
+@import '../../../styles/_mixin';
+@import '../../../styles/variables/_colors';
+//declartion of variables
+$width100:100px;
+// accession page header
+.accession-heading{
+ margin:5px 0;
+ padding-left: 5px;
+}
+//view of the accession
+.accession-view{
+      height: 100%;
+      @include  display-flex;
+}
+//accession view table
+.accession-view__table{width:99%}
+.padding0{padding:0px;}
+//accession view visit column
+.accession-view__Visit-column{
+    width: $width100 + 30px;
+    @extend .padding0;
+}
+//accession view DOB column
+.accession-view__DOB-column{
+     width: $width100 +20px;
+     @extend .padding0;
+}
+//accession view Icons column
+.accession-view__Icon-column{
+    width: $width100 - 50px;
+    @extend .padding0;
+}
+//accession view preview column
+.accession-view__preview-column{
+    width: $width100 - 45px;
+    @extend .padding0;
+}
+//accession view ID column
+.accession-view__Id-column{
+    width: $width100 + 20px;
+    padding-left: 0px; 
+}
+//accession view Gender column
+.accession-view__Gender-column{
+      width: $width100 + 15px;
+      padding-left: 0px;
+      padding-right: 0px; 
+}
+//accession view table tr td and table header
+.accession-view table tr td, .accession-view table tr th{
+ padding-left: 5px !important;
+ padding-right:5px !important;
+ white-space: inherit !important;
+ vertical-align:middle;
+ text-overflow: inherit !important;
+}
+//accession view table footer row first child element
+.accession-view table tfoot tr td:first-child{
+       margin:10px 0px;
+       width:0px;
+}

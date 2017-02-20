@@ -1,0 +1,71 @@
+import React,{PropTypes} from 'react';
+import { IndexLink, Link } from 'react-router'
+import './Header.scss';
+import RaisedButton from 'material-ui/RaisedButton';
+
+import { browserHistory } from 'react-router';
+
+//to create Header action 
+import * as headerAction from  '../../modules/headerAction'
+
+//update Header page component work with redux so importing connect function
+import { connect } from 'react-redux';
+
+class Header extends React.Component{
+   //constructor where assigning the default value for the property, initialize the event
+   constructor() {
+  super();
+      //binding the statement for all functions   
+    this.createLogout = this.createLogout.bind(this);
+  }
+
+  createLogout()
+  {
+      this.props.createLogout(this.props.isUserLoggedIn);
+
+      //browserHistory.push("/");
+       window.location.href = window.location.protocol +"/";
+
+  }
+  render(){
+    return (
+      
+      <div className='Header'>
+          <RaisedButton label="Logout" onTouchTap={this.createLogout} />
+      <Link to='/requisition' activeClassName='route--active' className="route--link">
+        Requisition Detail
+      </Link>
+        <h5>{this.props.UserName} </h5>
+    </div>
+    );
+  }
+}
+
+Header.PropTypes={
+  isUserLoggedIn: React.PropTypes.bool
+}
+
+//this function takes two parameters state & ownProps.
+//state is represent state in redux  store
+//ownProps let's to access the parameters attached to this component
+function mapStateToProps(state, ownProps)
+{
+  //inside the function define a object that return properties like to expose on our component  
+  return {
+    isUserLoggedIn: state.login.isUserLoggedIn,
+    UserName: state.login.user.userName
+  };
+}
+
+
+//this function is to deciding g what action to expose on this component 
+//dispatch is the function that allow to fire of the action
+// in mapDispatchToProps function dispatch createLogin action
+function mapDispatchToProps(dispatch)
+{
+  return{
+    createLogout:logout=> dispatch(headerAction.createLogout(logout))
+  };
+} 
+
+export default connect(mapStateToProps,mapDispatchToProps)(Header)
